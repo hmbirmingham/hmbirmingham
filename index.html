@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mikey Birmingham — Portfolio</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --surface: rgba(255,255,255,0.72);
+      --surface-solid: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #a1a1a6;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --sidebar-w: 240px;
+      --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: rgba(28,28,30,0.85);
+        --surface-solid: #1c1c1e;
+        --border: rgba(255,255,255,0.10);
+        --text-primary: #f5f5f7;
+        --text-secondary: #a1a1a6;
+        --text-tertiary: #6e6e73;
+        --accent: #2997ff;
+        --accent-hover: #409cff;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SIDEBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0;
+      width: var(--sidebar-w); height: 100vh;
+      display: flex; flex-direction: column;
+      padding: 48px 24px;
+      background: var(--surface);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-right: 1px solid var(--border);
+      z-index: 300;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); margin-bottom: 8px; }
+    .nav-tagline { font-size: 12px; color: var(--text-tertiary); margin-bottom: 48px; }
+    .nav-links { list-style: none; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .nav-links a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 500;
+      color: var(--text-secondary);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { background: rgba(0,113,227,0.10); color: var(--accent); }
+    .nav-links a .icon { width: 20px; height: 20px; opacity: 0.7; flex-shrink: 0; }
+    .nav-footer { font-size: 11px; color: var(--text-tertiary); }
+    .nav-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── MOBILE TOP BAR ── */
+    .mobile-bar {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      z-index: 250;
+      background: var(--surface);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+      align-items: center; justify-content: space-between;
+      padding: 0 20px;
+    }
+    .mobile-bar-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+    .hamburger {
+      width: 36px; height: 36px; border: none; background: none;
+      cursor: pointer; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 5px;
+      border-radius: 8px; padding: 0;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text-primary); border-radius: 2px;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+    body.nav-open .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    body.nav-open .hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    body.nav-open .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── NAV OVERLAY (mobile) ── */
+    .nav-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.35);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    body.nav-open .nav-overlay { opacity: 1; pointer-events: all; }
+
+    /* ── MAIN ── */
+    main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+    section {
+      min-height: 100vh; padding: 80px 64px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-child { border-bottom: none; }
+
+    /* ── HERO ── */
+    #about { background: linear-gradient(160deg, var(--bg) 0%, var(--surface-solid) 100%); }
+    .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+    .hero-name { font-size: clamp(48px, 6vw, 80px); font-weight: 700; letter-spacing: -2.5px; line-height: 1.0; color: var(--text-primary); margin-bottom: 24px; }
+    .hero-desc { font-size: 20px; font-weight: 400; line-height: 1.6; color: var(--text-secondary); max-width: 520px; margin-bottom: 40px; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; background: var(--accent); color: white;
+      font-size: 15px; font-weight: 600; border-radius: 980px;
+      text-decoration: none; transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .hero-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    /* ── SECTION HEADERS ── */
+    .section-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .section-title { font-size: clamp(34px, 4vw, 52px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.05; color: var(--text-primary); margin-bottom: 16px; }
+    .section-sub { font-size: 17px; color: var(--text-secondary); margin-bottom: 52px; max-width: 560px; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--surface-solid); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+
+    .project-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 32px; display: flex; flex-direction: column; gap: 18px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+    .project-card::before {
+      content: ''; position: absolute; inset: 0; border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(0,113,227,0.04) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.2s ease;
+    }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.10); border-color: rgba(0,113,227,0.2); }
+    .project-card:hover::before { opacity: 1; }
+
+    /* expand hint */
+    .expand-hint {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+      color: var(--text-tertiary); opacity: 0;
+      transition: opacity 0.2s ease;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .expand-hint svg { width: 10px; height: 10px; }
+    .project-card:hover .expand-hint { opacity: 1; }
+
+    .project-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .project-icon svg { width: 24px; height: 24px; }
+
+    .project-title { font-size: 18px; font-weight: 700; letter-spacing: -0.4px; color: var(--text-primary); line-height: 1.3; }
+    .project-desc { font-size: 13.5px; line-height: 1.7; color: var(--text-secondary); flex: 1;
+      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tech-tag {
+      font-size: 11px; font-weight: 500;
+      padding: 4px 10px; border-radius: 980px;
+      background: rgba(0,113,227,0.08); color: var(--accent);
+      border: 1px solid rgba(0,113,227,0.15);
+      white-space: nowrap;
+    }
+    @media (prefers-color-scheme: dark) {
+      .tech-tag { background: rgba(41,151,255,0.1); border-color: rgba(41,151,255,0.2); }
+    }
+
+    .project-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding-top: 2px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 18px; border-radius: 980px;
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      white-space: nowrap; cursor: pointer; border: none;
+    }
+    .btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .btn-github {
+      background: rgba(0,0,0,0.06); color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-github:hover { transform: translateY(-1px); opacity: 0.85; }
+    .btn-demo-disabled {
+      background: transparent; color: var(--text-tertiary);
+      border: 1px solid var(--border);
+      cursor: not-allowed; opacity: 0.55;
+    }
+    .btn-demo {
+      background: var(--accent); color: white;
+    }
+    .btn-demo:hover { transform: translateY(-1px); opacity: 0.9; }
+    @media (prefers-color-scheme: dark) {
+      .btn-github { background: rgba(255,255,255,0.08); }
+    }
+
+    /* ── PROJECT MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--surface-solid);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 44px 48px;
+      max-width: 620px; width: 100%;
+      max-height: 88vh; overflow-y: auto;
+      position: relative;
+      transform: scale(0.93) translateY(16px);
+      transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+      display: flex; flex-direction: column; gap: 22px;
+      scrollbar-width: thin;
+    }
+    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+    .modal-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(0,0,0,0.07); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary); font-size: 15px; line-height: 1;
+      transition: background 0.15s ease;
+    }
+    .modal-close:hover { background: rgba(0,0,0,0.13); }
+    @media (prefers-color-scheme: dark) {
+      .modal-close { background: rgba(255,255,255,0.08); }
+      .modal-close:hover { background: rgba(255,255,255,0.14); }
+    }
+
+    .modal-header { display: flex; align-items: center; gap: 18px; }
+    .modal-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); line-height: 1.2; }
+    .modal-desc { font-size: 15px; line-height: 1.75; color: var(--text-secondary); }
+    .modal-section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-tertiary); margin-bottom: 10px;
+    }
+    .modal-divider { height: 1px; background: var(--border); }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+    .skills-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; max-width: 900px; }
+
+    .skill-group {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px 28px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .skill-group-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-tertiary); padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+    .skill-name { font-size: 13.5px; font-weight: 500; color: var(--text-primary); flex: 1; line-height: 1.4; }
+    .proj-tags { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+    .proj-tag {
+      font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 980px;
+      white-space: nowrap; letter-spacing: 0.2px;
+    }
+    .tag-colony  { background: rgba(48,209,88,0.12);  color: #30d158; }
+    .tag-stm32   { background: rgba(191,90,242,0.12); color: #bf5af2; }
+    .tag-pk      { background: rgba(255,159,10,0.12); color: #ff9f0a; }
+    .tag-focus   { background: rgba(10,132,255,0.12); color: #0a84ff; }
+    .tag-all     { background: rgba(0,113,227,0.10);  color: var(--accent); }
+    .tag-soon    { background: rgba(0,0,0,0.05); color: var(--text-tertiary); }
+    @media (prefers-color-scheme: dark) {
+      .tag-soon { background: rgba(255,255,255,0.07); }
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--surface-solid); }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; max-width: 640px; }
+    .contact-card {
+      display: flex; align-items: center; gap: 16px; padding: 20px 24px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
+      text-decoration: none; color: var(--text-primary);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .contact-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .contact-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-icon svg { width: 20px; height: 20px; }
+    .contact-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-tertiary); margin-bottom: 2px; }
+    .contact-value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+    /* ── SCROLL ANIMATION ── */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      :root { --sidebar-w: 0px; }
+      .mobile-bar { display: flex; }
+      nav {
+        transform: translateX(-260px);
+        width: 260px;
+        padding-top: 72px;
+      }
+      body.nav-open nav { transform: translateX(0); }
+      main { margin-left: 0; padding-top: 56px; }
+      section { padding: 52px 20px; min-height: auto; }
+      .projects-grid { grid-template-columns: 1fr; gap: 16px; }
+      .skills-layout { grid-template-columns: 1fr; max-width: 100%; }
+      .contact-grid { grid-template-columns: 1fr; max-width: 100%; }
+      .hero-name { letter-spacing: -1.5px; }
+      .hero-desc { font-size: 17px; }
+      .section-title { letter-spacing: -1px; }
+      .section-sub { font-size: 15px; margin-bottom: 36px; }
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal {
+        border-radius: 24px 24px 0 0; max-height: 92vh;
+        padding: 32px 24px 40px;
+        transform: translateY(40px);
+      }
+      .modal-overlay.open .modal { transform: translateY(0); }
+      .project-card { padding: 24px; }
+      .expand-hint { display: none; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 44px 16px; }
+      .hero-name { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MOBILE TOP BAR -->
+  <div class="mobile-bar">
+    <span class="mobile-bar-title">Mikey Birmingham</span>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- NAV OVERLAY (closes sidebar on tap) -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="nav-logo">Mikey Birmingham</div>
+    <div class="nav-tagline">Cyber-Physical Systems</div>
+    <ul class="nav-links">
+      <li>
+        <a href="#about" class="active">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          About
+        </a>
+      </li>
+      <li>
+        <a href="#projects">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+          Projects
+        </a>
+      </li>
+      <li>
+        <a href="#skills">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Skills
+        </a>
+      </li>
+      <li>
+        <a href="#contact">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Contact
+        </a>
+      </li>
+    </ul>
+    <div class="nav-footer">
+      <a href="https://github.com/hmbirmingham" target="_blank">github.com/hmbirmingham</a>
+    </div>
+  </nav>
+
+  <!-- PROJECT MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <div id="modalIcon"></div>
+        <h2 class="modal-title" id="modalTitle"></h2>
+      </div>
+      <div class="modal-divider"></div>
+      <div>
+        <div class="modal-section-label">Overview</div>
+        <p class="modal-desc" id="modalDesc"></p>
+      </div>
+      <div>
+        <div class="modal-section-label">Technologies</div>
+        <div class="tech-tags" id="modalTags"></div>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="project-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="fade-up">
+        <p class="hero-eyebrow">Portfolio</p>
+        <h1 class="hero-name">Mikey<br>Birmingham.</h1>
+        <p class="hero-desc">
+          Cyber-Physical Systems · Embedded Imaging · Platform Engineering.
+          I build systems that operate at the hardware–software boundary —
+          from register-level firmware to computer vision pipelines running on embedded Linux.
+        </p>
+        <a href="#projects" class="hero-cta">
+          View My Projects
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="fade-up">
+        <p class="section-eyebrow">Work</p>
+        <h2 class="section-title">Projects.</h2>
+        <p class="section-sub">End-to-end systems spanning hardware design, firmware, and software — each built and validated from scratch.</p>
+      </div>
+
+      <div class="projects-grid fade-up" style="transition-delay:0.1s">
+
+        <!-- PROJECT 1: Colony Counter -->
+        <div class="project-card" data-project="colony">
+          <span class="expand-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Expand
+          </span>
+          <div class="project-icon" style="background: linear-gradient(135deg, #30d158, #0071e3)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="3"/></svg>
+          </div>
+          <div class="project-title">Automated Bacterial Colony Counter</div>
+          <div class="project-desc">
+            End-to-end embedded imaging system built on Raspberry Pi for automated quantification of bacterial colonies. Combines controlled LED illumination hardware, a custom power management PCB, and a Python-based computer vision pipeline. Features two-layer anomaly detection using statistical methods and a Random Forest classifier, with automatic CSV logging and a touch display GUI. Targeting sub-5% quantification error benchmarked against manual laboratory workflows.
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">OpenCV</span>
+            <span class="tech-tag">Raspberry Pi</span>
+            <span class="tech-tag">Linux</span>
+            <span class="tech-tag">KiCad</span>
+            <span class="tech-tag">scikit-learn</span>
+            <span class="tech-tag">systemd</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/hmbirmingham" target="_blank" class="btn btn-github" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+            <span class="btn btn-demo-disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Demo Coming Soon
+            </span>
+          </div>
+        </div>
+
+        <!-- PROJECT 2: STM32 -->
+        <div class="project-card" data-project="stm32">
+          <span class="expand-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Expand
+          </span>
+          <div class="project-icon" style="background: linear-gradient(135deg, #bf5af2, #ff375f)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><rect x="2" y="9" width="6" height="6" rx="1"/><rect x="16" y="9" width="6" height="6" rx="1"/><line x1="9" y1="5" x2="8" y2="5"/><line x1="15" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="16"/></svg>
+          </div>
+          <div class="project-title">STM32 Bare-Metal Peripheral Drivers</div>
+          <div class="project-desc">
+            Register-level peripheral drivers written from scratch on the STM32F411RE Nucleo board with no HAL abstraction. Each driver directly addresses hardware peripheral registers via memory-mapped I/O and is verified with a logic analyzer. Covers GPIO, UART, I2C, and SPI with clean documentation and build evidence for each.
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">C</span>
+            <span class="tech-tag">STM32</span>
+            <span class="tech-tag">ARM Cortex-M4</span>
+            <span class="tech-tag">ARM GCC</span>
+            <span class="tech-tag">OpenOCD</span>
+            <span class="tech-tag">st-flash</span>
+            <span class="tech-tag">Logic Analyzer</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/hmbirmingham/stm32-peripherals" target="_blank" class="btn btn-github" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+            <span class="btn btn-demo-disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Demo Coming Soon
+            </span>
+          </div>
+        </div>
+
+        <!-- PROJECT 3: PK Simulator -->
+        <div class="project-card" data-project="pk">
+          <span class="expand-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Expand
+          </span>
+          <div class="project-icon" style="background: linear-gradient(135deg, #ff9f0a, #ff375f)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="project-title">Two-Compartment Pharmacokinetic Simulator</div>
+          <div class="project-desc">
+            Python-based simulator modeling drug concentration over time using a two-compartment PK model. Supports IV bolus, IV infusion, and oral dosing routes. Calculates AUC, Cmax, Tmax, and half-life. Validated against published pharmacokinetic parameters for real drugs.
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">NumPy</span>
+            <span class="tech-tag">SciPy</span>
+            <span class="tech-tag">Matplotlib</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/hmbirmingham/Pharmacokinetic-Simulator" target="_blank" class="btn btn-github" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+            <span class="btn btn-demo-disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Demo Coming Soon
+            </span>
+          </div>
+        </div>
+
+        <!-- PROJECT 4: FocusGuard -->
+        <div class="project-card" data-project="focus">
+          <span class="expand-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Expand
+          </span>
+          <div class="project-icon" style="background: linear-gradient(135deg, #0a84ff, #5e5ce6)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="project-title">FocusGuard — Fatigue &amp; Stress Monitor</div>
+          <div class="project-desc">
+            Lightweight macOS menu bar app that monitors fatigue and stress in real-time using camera and keyboard behaviour. Tracks blink rate and eye openness via MediaPipe face mesh, plus typing speed, error rate, and pause length. Combines signals into Fatigue and Stress scores, displays them in the menu bar, and sends native macOS notifications when it's time to take a break. Includes a live Flask dashboard with trend charts. Fully local — no cloud, no accounts.
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">MediaPipe</span>
+            <span class="tech-tag">OpenCV</span>
+            <span class="tech-tag">PyObjC</span>
+            <span class="tech-tag">Flask</span>
+            <span class="tech-tag">pynput</span>
+            <span class="tech-tag">threading</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/hmbirmingham/focus-guard" target="_blank" class="btn btn-github" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+            <span class="btn btn-demo-disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Demo Coming Soon
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="fade-up">
+        <p class="section-eyebrow">Expertise</p>
+        <h2 class="section-title">Skills.</h2>
+        <p class="section-sub">Technical capabilities mapped to the projects that demonstrate them.</p>
+      </div>
+
+      <div class="skills-layout fade-up" style="transition-delay:0.1s">
+
+        <!-- Embedded Systems & Firmware -->
+        <div class="skill-group">
+          <div class="skill-group-title">Embedded Systems &amp; Firmware</div>
+          <div class="skill-row">
+            <span class="skill-name">C</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">STM32 / ARM Cortex-M4</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Register-level drivers — GPIO, UART, I2C, SPI</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">ARM GCC Toolchain</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Logic Analyzer — bus verification</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">KiCad — schematic capture &amp; PCB layout</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">FreeRTOS</span>
+            <div class="proj-tags"><span class="proj-tag tag-soon">Coming Soon</span></div>
+          </div>
+        </div>
+
+        <!-- Hardware Design -->
+        <div class="skill-group">
+          <div class="skill-group-title">Hardware Design</div>
+          <div class="skill-row">
+            <span class="skill-name">PCB design and bring-up</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Power management — buck converter, INA219</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">MOSFET LED driver circuits</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">SMD soldering and assembly</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+        </div>
+
+        <!-- Software & Systems -->
+        <div class="skill-group">
+          <div class="skill-group-title">Software &amp; Systems</div>
+          <div class="skill-row">
+            <span class="skill-name">Python</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span><span class="proj-tag tag-pk">PK Sim</span><span class="proj-tag tag-focus">FocusGuard</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">OpenCV — computer vision pipeline</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span><span class="proj-tag tag-focus">FocusGuard</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">MediaPipe — face mesh &amp; blink detection</span>
+            <div class="proj-tags"><span class="proj-tag tag-focus">FocusGuard</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">scikit-learn — Random Forest anomaly detection</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Flask — REST API &amp; real-time dashboards</span>
+            <div class="proj-tags"><span class="proj-tag tag-focus">FocusGuard</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Multi-threaded producer-consumer systems</span>
+            <div class="proj-tags"><span class="proj-tag tag-focus">FocusGuard</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Linux — systemd, cross-compile, Raspberry Pi OS</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Git — branches, commits, documentation</span>
+            <div class="proj-tags"><span class="proj-tag tag-all">All Projects</span></div>
+          </div>
+        </div>
+
+        <!-- Scientific Computing -->
+        <div class="skill-group">
+          <div class="skill-group-title">Scientific Computing</div>
+          <div class="skill-row">
+            <span class="skill-name">NumPy, SciPy — ODE solving &amp; numerical methods</span>
+            <div class="proj-tags"><span class="proj-tag tag-pk">PK Sim</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Matplotlib — data visualization</span>
+            <div class="proj-tags"><span class="proj-tag tag-pk">PK Sim</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Pharmacokinetic modeling — two-compartment PK</span>
+            <div class="proj-tags"><span class="proj-tag tag-pk">PK Sim</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="fade-up">
+        <p class="section-eyebrow">Get In Touch</p>
+        <h2 class="section-title">Let's Talk.</h2>
+        <p class="section-sub">Open to collaborations, research roles, and engineering opportunities.</p>
+      </div>
+      <div class="contact-grid fade-up" style="transition-delay:0.1s">
+        <a href="mailto:hmbirmingham1@gmail.com" class="contact-card">
+          <div class="contact-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">hmbirmingham1@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://github.com/hmbirmingham" target="_blank" class="contact-card">
+          <div class="contact-icon" style="background: linear-gradient(135deg, #2d3436, #636e72)">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">hmbirmingham</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/hmbirmingham/" target="_blank" class="contact-card">
+          <div class="contact-icon" style="background: linear-gradient(135deg, #0077b5, #00a0dc)">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">hmbirmingham</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ── PROJECT DATA (extended descriptions for modal) ──
+    const projectData = {
+      colony: {
+        fullDesc: `End-to-end embedded imaging system built on Raspberry Pi for automated quantification of bacterial colonies on agar plates. The hardware combines a custom LED ring illumination array with a dedicated power management PCB designed in KiCad, featuring a buck converter, INA219 current sensing, and MOSFET-driven LED control. The software pipeline uses OpenCV for image preprocessing and contour-based colony segmentation, with a two-layer anomaly detection system: statistical outlier filtering followed by a Random Forest classifier trained on morphological features. Results are logged automatically to CSV with timestamps, and a touch-optimized GUI runs on the attached display. Target: sub-5% quantification error vs. manual laboratory counting.`
+      },
+      stm32: {
+        fullDesc: `Bare-metal peripheral driver library for the STM32F411RE Nucleo board written entirely from scratch with zero HAL abstraction. Every driver communicates with hardware via direct memory-mapped I/O register access using the device reference manual. Implemented drivers: GPIO (push-pull, open-drain, alternate function modes), UART (polling and interrupt modes, baud rate configuration), I2C (master mode, 7-bit addressing, start/stop generation), and SPI (configurable clock polarity/phase, NSS control). All drivers verified with a logic analyzer, with annotated scope captures included in the repo as build evidence.`
+      },
+      pk: {
+        fullDesc: `Python simulation of drug concentration-time profiles using the two-compartment pharmacokinetic model. The simulator numerically integrates the ODE system describing distribution between central and peripheral compartments using SciPy's solve_ivp. Supported dosing routes: IV bolus (instantaneous), IV infusion (constant rate over defined duration), and oral (first-order absorption with adjustable bioavailability). Automatically computes key PK parameters: AUC (trapezoidal rule), Cmax, Tmax, and half-life. Model parameters validated against published PK data for real drugs including lidocaine, vancomycin, and acetaminophen. Outputs concentration-time curves via Matplotlib with labeled annotations.`
+      },
+      focus: {
+        fullDesc: `Lightweight macOS menu bar app that quietly monitors operator fatigue and stress using two passive sensor streams. The camera thread runs MediaPipe face mesh at ~30fps to track blink rate and eye aspect ratio (EAR), while the keyboard thread uses pynput to measure typing speed, backspace error rate, and inter-keystroke pause duration. A scoring function combines these into Fatigue (camera + keyboard) and Stress (keyboard) scores; a weighted combined score ≥ 60 triggers a native macOS notification with a 10-minute cooldown. Architecture is a multi-threaded producer-consumer system with lock-guarded shared state, ensuring consumers always read consistent cross-modal snapshots. Data is logged to per-day CSV files every 10 seconds, visualized in a Flask-served dashboard that auto-refreshes every 5 seconds. All processing is local — no cloud, no accounts, no background services required.`
+      }
+    };
+
+    // ── MODAL LOGIC ──
+    const overlay = document.getElementById('modalOverlay');
+    const modal = document.getElementById('modal');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(card) {
+      const id = card.dataset.project;
+      const data = projectData[id];
+
+      // Icon
+      document.getElementById('modalIcon').innerHTML = card.querySelector('.project-icon').outerHTML;
+      // Title
+      document.getElementById('modalTitle').textContent = card.querySelector('.project-title').textContent;
+      // Description
+      document.getElementById('modalDesc').textContent = data ? data.fullDesc : card.querySelector('.project-desc').textContent;
+      // Tags
+      document.getElementById('modalTags').innerHTML = card.querySelector('.tech-tags').innerHTML;
+      // Actions (clone, re-enable stopPropagation)
+      const actionsClone = card.querySelector('.project-actions').cloneNode(true);
+      actionsClone.querySelectorAll('a, button').forEach(el => {
+        el.removeAttribute('onclick');
+      });
+      document.getElementById('modalActions').innerHTML = actionsClone.innerHTML;
+
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', () => openModal(card));
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // ── MOBILE NAV ──
+    const hamburger = document.getElementById('hamburgerBtn');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function toggleNav() { document.body.classList.toggle('nav-open'); }
+    function closeNav() { document.body.classList.remove('nav-open'); }
+
+    hamburger.addEventListener('click', toggleNav);
+    navOverlay.addEventListener('click', closeNav);
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', closeNav);
+    });
+
+    // ── ACTIVE NAV ON SCROLL ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    function updateActiveNav() {
+      let current = '';
+      sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 200) current = sec.id; });
+      navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+    }
+
+    // ── FADE UP ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    updateActiveNav();
+  </script>
+</body>
+</html>
