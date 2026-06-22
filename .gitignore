@@ -1,31 +1,16 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-venv/
-.venv/
-*.egg-info/
-
-# Captured images — too large for git
-captures/
-results/
-
-# ML model — regenerated from training data
-models/
-
-# Data — tracked separately via cloud sync
-data/
-
-# Other projects accidentally in this folder
-focus-guard/
-
-# Claude settings
-.claude/
-
-# OS
+# OS junk
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-*.html
+# Editor / tooling
+.claude/
+
+# Local helpers & config — not part of the published site
+sync.sh
+hmbirmingham-me.zone
+
+# Separate project repos (each has its own GitHub repo)
+pharmasim/
+imaging-system/
+focus-guard/
+Portfolio SIte/
