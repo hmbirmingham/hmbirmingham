@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusGuard · Demo · Mikey Birmingham</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --surface: rgba(255,255,255,0.72);
+      --surface-solid: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #a1a1a6;
+      --accent: #0a84ff;
+      --accent-ink: #0071e3;
+      --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000; --surface: rgba(28,28,30,0.85); --surface-solid: #1c1c1e;
+        --border: rgba(255,255,255,0.10); --text-primary: #f5f5f7; --text-secondary: #a1a1a6;
+        --text-tertiary: #6e6e73; --accent: #0a84ff; --accent-ink: #2997ff;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; background: var(--surface); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); }
+    .back { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--accent-ink); }
+    .back svg { width: 15px; height: 15px; }
+    .topbar-gh { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; text-decoration: none;
+      color: var(--text-primary); padding: 8px 14px; border-radius: 980px; border: 1px solid var(--border); background: var(--surface-solid); }
+    .topbar-gh svg { width: 15px; height: 15px; }
+
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 24px 96px; }
+    .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .hero-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 18px; }
+    .hero-sub { font-size: 18px; color: var(--text-secondary); max-width: 700px; margin-bottom: 22px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+    .tag { font-size: 11px; font-weight: 500; padding: 4px 11px; border-radius: 980px; background: rgba(10,132,255,0.12); color: var(--accent); border: 1px solid rgba(10,132,255,0.22); }
+
+    .note { display: flex; gap: 10px; align-items: flex-start; background: rgba(10,132,255,0.08); border: 1px solid rgba(10,132,255,0.2);
+      border-radius: 14px; padding: 14px 16px; margin: 28px 0 8px; font-size: 14px; color: var(--text-secondary); }
+    .note svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--accent); margin-top: 1px; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 28px; }
+    .feature { background: var(--surface-solid); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+    .feature-t { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .feature-d { font-size: 13px; color: var(--text-secondary); }
+
+    .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); margin: 44px 0 14px; }
+
+    .shot-card { background: var(--surface-solid); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08); }
+    .shot-card img { width: 100%; height: auto; border-radius: 12px; display: block; border: 1px solid var(--border); cursor: zoom-in; }
+    .caption { font-size: 13px; color: var(--text-tertiary); text-align: center; margin-top: 12px; }
+
+    .lb { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lb.open { display: flex; }
+    .lb img { max-width: 96vw; max-height: 92vh; border-radius: 10px; }
+
+    @media (max-width: 600px) { .wrap { padding: 36px 16px 72px; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back" href="index.html#projects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Portfolio
+    </a>
+    <a class="topbar-gh" href="https://github.com/hmbirmingham/focus-guard" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      Source
+    </a>
+  </div>
+
+  <div class="wrap">
+    <p class="hero-eyebrow">Demo · macOS · Computer Vision</p>
+    <h1 class="hero-title">FocusGuard<br>Fatigue &amp; Stress Monitor</h1>
+    <p class="hero-sub">
+      A lightweight macOS menu-bar app that passively watches two signal streams: camera (blink rate
+      and eye openness via MediaPipe face mesh) and keyboard (typing speed, error rate, pause length),
+      and fuses them into live Fatigue and Stress scores. Below is the companion Flask dashboard,
+      captured live with sample session data.
+    </p>
+    <div class="tags">
+      <span class="tag">Python</span><span class="tag">MediaPipe</span><span class="tag">OpenCV</span><span class="tag">PyObjC</span><span class="tag">Flask</span><span class="tag">pynput</span>
+    </div>
+
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span>Screenshot of the real dashboard UI served by the app, populated with a representative session. Live, it auto-refreshes every 5s from <code>/api/status</code> and <code>/api/history</code>. Click to enlarge.</span>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature"><div class="feature-t">Score rings</div><div class="feature-d">Fatigue, Stress, and a weighted Combined score (0.6 / 0.4), color-coded green → yellow → red.</div></div>
+      <div class="feature"><div class="feature-t">Live gauges</div><div class="feature-d">Camera and keyboard parameters with per-metric thresholds drawn straight from <code>config.json</code>.</div></div>
+      <div class="feature"><div class="feature-t">Signals detected</div><div class="feature-d">Plain-language reasons for the current score, e.g. low blink rate, drooping eyelids, long pauses.</div></div>
+      <div class="feature"><div class="feature-t">Session trend</div><div class="feature-d">Last hour of Fatigue / Stress / Combined from the synchronized CSV log via <code>/api/history</code>.</div></div>
+    </div>
+
+    <div class="section-label">Live Dashboard</div>
+    <div class="shot-card">
+      <img src="assets/focus/dashboard.png" alt="FocusGuard live dashboard">
+    </div>
+    <p class="caption">FocusGuard dashboard · moderate-fatigue session. Three active signals, combined break score 44/100 (break recommended at ≥ 60).</p>
+  </div>
+
+  <div class="lb" id="lb"><img id="lbImg" src="" alt=""></div>
+  <script>
+    const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+    document.querySelectorAll('.shot-card img').forEach(img => img.addEventListener('click', () => { lbImg.src = img.src; lb.classList.add('open'); }));
+    lb.addEventListener('click', () => lb.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+  </script>
+</body>
+</html>

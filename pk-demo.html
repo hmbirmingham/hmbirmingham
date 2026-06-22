@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PK Simulator · Demo · Mikey Birmingham</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --surface: rgba(255,255,255,0.72);
+      --surface-solid: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #a1a1a6;
+      --accent: #ff9f0a;
+      --accent-ink: #0071e3;
+      --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: rgba(28,28,30,0.85);
+        --surface-solid: #1c1c1e;
+        --border: rgba(255,255,255,0.10);
+        --text-primary: #f5f5f7;
+        --text-secondary: #a1a1a6;
+        --text-tertiary: #6e6e73;
+        --accent: #ff9f0a;
+        --accent-ink: #2997ff;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font); background: var(--bg); color: var(--text-primary);
+      -webkit-font-smoothing: antialiased; line-height: 1.6;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; background: var(--surface);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 14px; font-weight: 600; text-decoration: none;
+      color: var(--accent-ink);
+    }
+    .back svg { width: 15px; height: 15px; }
+    .topbar-gh {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: var(--text-primary); padding: 8px 14px; border-radius: 980px;
+      border: 1px solid var(--border); background: var(--surface-solid);
+    }
+    .topbar-gh svg { width: 15px; height: 15px; }
+
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 24px 96px; }
+
+    .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .hero-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 18px; }
+    .hero-sub { font-size: 18px; color: var(--text-secondary); max-width: 680px; margin-bottom: 22px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+    .tag { font-size: 11px; font-weight: 500; padding: 4px 11px; border-radius: 980px;
+      background: rgba(255,159,10,0.12); color: var(--accent); border: 1px solid rgba(255,159,10,0.22); }
+
+    .note {
+      display: flex; gap: 10px; align-items: flex-start;
+      background: rgba(255,159,10,0.08); border: 1px solid rgba(255,159,10,0.2);
+      border-radius: 14px; padding: 14px 16px; margin: 28px 0 8px; font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .note svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--accent); margin-top: 1px; }
+
+    .chart-card {
+      background: var(--surface-solid); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 26px; margin-top: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .chart-head { margin-bottom: 18px; }
+    .chart-num { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.5px; }
+    .chart-title { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin: 4px 0 6px; }
+    .chart-desc { font-size: 14.5px; color: var(--text-secondary); max-width: 760px; }
+    .chart-img {
+      width: 100%; height: auto; border-radius: 12px; display: block;
+      border: 1px solid var(--border); background: #fff; cursor: zoom-in;
+    }
+    .metrics { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .metric { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; }
+    .metric-k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-tertiary); }
+    .metric-v { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+    .metric-v small { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+
+    .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); margin: 44px 0 4px; }
+
+    /* lightbox */
+    .lb { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.85);
+      display: none; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lb.open { display: flex; }
+    .lb img { max-width: 96vw; max-height: 92vh; border-radius: 10px; }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 36px 16px 72px; }
+      .chart-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back" href="index.html#projects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Portfolio
+    </a>
+    <a class="topbar-gh" href="https://github.com/hmbirmingham/Pharmacokinetic-Simulator" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      Source
+    </a>
+  </div>
+
+  <div class="wrap">
+    <p class="hero-eyebrow">Demo · Scientific Computing</p>
+    <h1 class="hero-title">Two-Compartment<br>Pharmacokinetic Simulator</h1>
+    <p class="hero-sub">
+      A Python simulator that integrates the two-compartment PK ODE system with SciPy to model
+      drug concentration over time across central (plasma) and peripheral (tissue) compartments.
+      It supports IV bolus, IV infusion, and oral dosing, and derives AUC, C<sub>max</sub>, T<sub>max</sub>, and half-life.
+      Every plot below is generated directly by the simulator.
+    </p>
+    <div class="tags">
+      <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">SciPy · solve_ivp</span><span class="tag">Matplotlib</span>
+    </div>
+
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span>These figures are the actual output of the model. Parameters were validated against published PK data for lidocaine, vancomycin, and acetaminophen. Click any chart to enlarge.</span>
+    </div>
+
+    <div class="section-label">Generated Output</div>
+
+    <!-- 1 -->
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-num">01</div>
+        <div class="chart-title">Single Dose: IV Bolus 1000 mg</div>
+        <div class="chart-desc">
+          The full single-dose profile: plasma (C1) and tissue (C2) concentration curves, the semi-log
+          plot revealing biexponential decay (distribution α-phase then elimination β-phase), and a
+          parameter table with the derived metrics computed by the model.
+        </div>
+      </div>
+      <img class="chart-img" src="assets/pk/single_dose.png" alt="Single dose IV bolus PK profile">
+      <div class="metrics">
+        <div class="metric"><div class="metric-k">C<sub>max</sub> (C1)</div><div class="metric-v">99.3 <small>mg/L</small></div></div>
+        <div class="metric"><div class="metric-k">AUC (C1)</div><div class="metric-v">583.2 <small>mg·hr/L</small></div></div>
+        <div class="metric"><div class="metric-k">Terminal t½</div><div class="metric-v">34.7 <small>hr</small></div></div>
+        <div class="metric"><div class="metric-k">Clearance</div><div class="metric-v">1.20 <small>L/hr</small></div></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-num">02</div>
+        <div class="chart-title">Multiple Dosing: IV Bolus 1000 mg q12h × 8</div>
+        <div class="chart-desc">
+          Repeated dosing on a fixed schedule. Both compartments accumulate toward steady state; with a
+          terminal half-life of 34.7 hr the system approaches near-steady-state at roughly 173 hr (~5 half-lives),
+          shown by the shaded region.
+        </div>
+      </div>
+      <img class="chart-img" src="assets/pk/multi_dose.png" alt="Multiple dosing accumulation to steady state">
+    </div>
+
+    <!-- 3 -->
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-num">03</div>
+        <div class="chart-title">Dosing Route Comparison: Same Dose, Different Kinetics</div>
+        <div class="chart-desc">
+          The same total dose delivered three ways: IV bolus, IV infusion over 1 hr, and oral (first-order
+          absorption, F = 0.85). Note how the route reshapes C<sub>max</sub>, T<sub>max</sub>, and total exposure (AUC)
+          while elimination kinetics stay constant.
+        </div>
+      </div>
+      <img class="chart-img" src="assets/pk/route_comparison.png" alt="IV bolus vs infusion vs oral comparison">
+    </div>
+
+    <!-- 4 -->
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-num">04</div>
+        <div class="chart-title">Parameter Sensitivity: Elimination Rate (k10)</div>
+        <div class="chart-desc">
+          Sweeping the elimination rate constant k10 across five values. Higher k10 drives faster clearance
+          and a steeper late-phase slope, a quick way to see how a single model parameter governs the
+          concentration-time curve.
+        </div>
+      </div>
+      <img class="chart-img" src="assets/pk/sensitivity.png" alt="Sensitivity analysis of elimination rate constant">
+    </div>
+  </div>
+
+  <div class="lb" id="lb"><img id="lbImg" src="" alt=""></div>
+
+  <script>
+    const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+    document.querySelectorAll('.chart-img').forEach(img => {
+      img.addEventListener('click', () => { lbImg.src = img.src; lb.classList.add('open'); });
+    });
+    lb.addEventListener('click', () => lb.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+  </script>
+</body>
+</html>
