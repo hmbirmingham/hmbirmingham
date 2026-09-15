@@ -293,6 +293,8 @@
     .tag-focus   { background: rgba(10,132,255,0.12); color: #0a84ff; }
     .tag-all     { background: rgba(0,113,227,0.10);  color: var(--accent); }
     .tag-soon    { background: rgba(0,0,0,0.05); color: var(--text-tertiary); }
+    .tag-husky   { background: rgba(94,92,230,0.14); color: #5e5ce6; }
+    .tag-wip     { background: rgba(255,159,10,0.14); color: #ff9f0a; }
     @media (prefers-color-scheme: dark) {
       .tag-soon { background: rgba(255,255,255,0.07); }
     }
@@ -367,7 +369,7 @@
   <!-- SIDEBAR -->
   <nav id="sidebar">
     <div class="nav-logo">Mikey Birmingham</div>
-    <div class="nav-tagline">Cyber-Physical Systems</div>
+    <div class="nav-tagline">Cyber-Physical Systems · UConn</div>
     <ul class="nav-links">
       <li>
         <a href="#about" class="active">
@@ -430,9 +432,10 @@
         <p class="hero-eyebrow">Portfolio</p>
         <h1 class="hero-name">Mikey<br>Birmingham.</h1>
         <p class="hero-desc">
-          Cyber-Physical Systems · Embedded Imaging · Platform Engineering.
-          I build systems that operate at the hardware-software boundary,
-          from register-level firmware to computer vision pipelines running on embedded Linux.
+          Cyber-Physical Systems · Embedded Software · Full-Stack Engineering.
+          I build systems end to end across the hardware-software boundary: register-level firmware,
+          an embedded computer-vision platform for a university microbiology lab, scientific simulation,
+          and full-stack web applications.
         </p>
         <a href="#projects" class="hero-cta">
           View My Projects
@@ -446,7 +449,7 @@
       <div class="fade-up">
         <p class="section-eyebrow">Work</p>
         <h2 class="section-title">Projects.</h2>
-        <p class="section-sub">End-to-end systems spanning hardware design, firmware, and software, each built and validated from scratch.</p>
+        <p class="section-sub">From register-level firmware to embedded computer vision, scientific computing, and full-stack web, each built and documented from scratch.</p>
       </div>
 
       <div class="projects-grid fade-up" style="transition-delay:0.1s">
@@ -462,16 +465,15 @@
           </div>
           <div class="project-title">Automated Bacterial Colony Counter</div>
           <div class="project-desc">
-            End-to-end embedded imaging system built on Raspberry Pi for automated quantification of bacterial colonies. Combines controlled LED illumination hardware, a custom power management PCB, and a Python-based computer vision pipeline. Features two-layer anomaly detection using statistical methods and a Random Forest classifier, with automatic CSV logging and a touch display GUI. Targeting sub-5% quantification error benchmarked against manual laboratory workflows.
+            Embedded imaging platform on a Raspberry Pi 5, built for the UConn Medical Laboratory Sciences lab, that backlights agar plates and quantifies bacterial colonies. The OpenCV pipeline uses background subtraction and watershed segmentation, reports every colony in distance-invariant mm², detects haemolysis halos, and flags outliers with a statistical anomaly layer across profiles for 39 organisms and 11 culture media. An in-app validation workflow lets a PhD correct results and sign off, logging ground-truth labels to CSV. A machine-learning anomaly model (Random Forest and Isolation Forest) and a custom power-control PCB are in progress.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">Python</span>
             <span class="tech-tag">OpenCV</span>
-            <span class="tech-tag">Raspberry Pi</span>
-            <span class="tech-tag">Linux</span>
-            <span class="tech-tag">KiCad</span>
+            <span class="tech-tag">Raspberry Pi 5</span>
+            <span class="tech-tag">Flask</span>
             <span class="tech-tag">scikit-learn</span>
-            <span class="tech-tag">systemd</span>
+            <span class="tech-tag">Linux</span>
           </div>
           <div class="project-actions">
             <a href="https://github.com/hmbirmingham/imaging-system" target="_blank" class="btn btn-github" onclick="event.stopPropagation()">
@@ -496,14 +498,14 @@
           </div>
           <div class="project-title">STM32 Bare-Metal Peripheral Drivers</div>
           <div class="project-desc">
-            Register-level peripheral drivers written from scratch on the STM32F411RE Nucleo board with no HAL abstraction. Each driver directly addresses hardware peripheral registers via memory-mapped I/O and is verified with a logic analyzer. Covers GPIO and UART with clean documentation and build evidence for each.
+            Register-level peripheral drivers for the STM32F411RE Nucleo, written from scratch with no HAL, addressing hardware registers directly via memory-mapped I/O. GPIO (register-level toggle on PA5) and USART2 (transmit at 115200 baud) are complete and verified on a logic analyzer, each with its own documentation and build evidence. Roadmap in the repo: I2C (BME280), SPI (SSD1306), ADC with DMA, and FreeRTOS.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">C</span>
             <span class="tech-tag">STM32</span>
             <span class="tech-tag">ARM Cortex-M4</span>
             <span class="tech-tag">ARM GCC</span>
-            <span class="tech-tag">OpenOCD</span>
+            <span class="tech-tag">STM32CubeIDE</span>
             <span class="tech-tag">st-flash</span>
             <span class="tech-tag">Logic Analyzer</span>
           </div>
@@ -584,6 +586,39 @@
           </div>
         </div>
 
+        <!-- PROJECT 5: HuskyBook -->
+        <div class="project-card" data-project="husky">
+          <span class="expand-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Expand
+          </span>
+          <div class="project-icon" style="background: linear-gradient(135deg, #5e5ce6, #64d2ff)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="project-title">HuskyBook: Peer-to-Peer Campus Directory</div>
+          <div class="project-desc">
+            Full-stack web app connecting UConn students who offer personal-care services with students looking to book them. A Node and Express REST API, a Vite front end, and a SQLite database (Node's built-in node:sqlite) are wired together as npm workspaces. Account-based auth enforces listing ownership server-side, and a privacy-by-design disclosure model keeps sensitive fields such as exact location and contact out of the public browse endpoint, releasing them only after a provider accepts a request.
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">Express</span>
+            <span class="tech-tag">Vite</span>
+            <span class="tech-tag">SQLite</span>
+            <span class="tech-tag">REST API</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/hmbirmingham/huskybook" target="_blank" class="btn btn-github" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+            <span class="btn btn-demo-disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Demo Coming Soon
+            </span>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -621,33 +656,33 @@
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">KiCad: schematic capture &amp; PCB layout</span>
+            <span class="skill-name">Hardware PWM via register access (RP1)</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">FreeRTOS</span>
-            <div class="proj-tags"><span class="proj-tag tag-soon">Coming Soon</span></div>
+            <span class="skill-name">I2C, SPI, ADC/DMA, FreeRTOS</span>
+            <div class="proj-tags"><span class="proj-tag tag-soon">Roadmap</span></div>
           </div>
         </div>
 
-        <!-- Hardware Design -->
+        <!-- Hardware & Interfacing -->
         <div class="skill-group">
-          <div class="skill-group-title">Hardware Design</div>
+          <div class="skill-group-title">Hardware &amp; Interfacing</div>
           <div class="skill-row">
-            <span class="skill-name">PCB design and bring-up</span>
+            <span class="skill-name">LED backlight control via hardware PWM (RP1 mmap)</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Power management: buck converter, INA219</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+            <span class="skill-name">Custom power-control PCB (KiCad)</span>
+            <div class="proj-tags"><span class="proj-tag tag-wip">In Progress</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">MOSFET LED driver circuits</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+            <span class="skill-name">Buck converter, INA219 current sensing</span>
+            <div class="proj-tags"><span class="proj-tag tag-wip">In Progress</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">SMD soldering and assembly</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+            <span class="skill-name">MOSFET LED driver, SMD assembly</span>
+            <div class="proj-tags"><span class="proj-tag tag-wip">In Progress</span></div>
           </div>
         </div>
 
@@ -667,12 +702,28 @@
             <div class="proj-tags"><span class="proj-tag tag-focus">FocusGuard</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">scikit-learn: Random Forest anomaly detection</span>
+            <span class="skill-name">scikit-learn: Random Forest &amp; Isolation Forest</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
             <span class="skill-name">Flask: REST API &amp; real-time dashboards</span>
-            <div class="proj-tags"><span class="proj-tag tag-focus">FocusGuard</span></div>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span><span class="proj-tag tag-focus">FocusGuard</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Node.js &amp; Express: REST API</span>
+            <div class="proj-tags"><span class="proj-tag tag-husky">HuskyBook</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">SQLite: relational schema &amp; queries</span>
+            <div class="proj-tags"><span class="proj-tag tag-husky">HuskyBook</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Vite &amp; JavaScript front end</span>
+            <div class="proj-tags"><span class="proj-tag tag-husky">HuskyBook</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Auth &amp; access control (privacy-by-design)</span>
+            <div class="proj-tags"><span class="proj-tag tag-husky">HuskyBook</span></div>
           </div>
           <div class="skill-row">
             <span class="skill-name">Multi-threaded producer-consumer systems</span>
@@ -752,16 +803,19 @@
     // ── PROJECT DATA (extended descriptions for modal) ──
     const projectData = {
       colony: {
-        fullDesc: `End-to-end embedded imaging system built on Raspberry Pi for automated quantification of bacterial colonies on agar plates. The hardware combines a custom LED ring illumination array with a dedicated power management PCB designed in KiCad, featuring a buck converter, INA219 current sensing, and MOSFET-driven LED control. The software pipeline uses OpenCV for image preprocessing and contour-based colony segmentation, with a two-layer anomaly detection system: statistical outlier filtering followed by a Random Forest classifier trained on morphological features. Results are logged automatically to CSV with timestamps, and a touch-optimized GUI runs on the attached display. Target: sub-5% quantification error vs. manual laboratory counting.`
+        fullDesc: `Embedded imaging platform on a Raspberry Pi 5, built for the UConn Medical Laboratory Sciences lab to backlight agar plates and quantify bacterial colonies. A white LED panel is driven by hardware PWM through direct RP1 register access, and the operator UI is a Flask single-page app shown full-screen in Chromium kiosk mode. The OpenCV pipeline segments colonies with background subtraction and watershed, reports every colony in distance-invariant mm² regardless of camera height, estimates haemolysis by halo brightness under backlight, and runs a statistical anomaly layer over per-organism profiles spanning 39 organisms and 11 culture media. An in-app validation workflow lets a PhD click to correct colonies, label anomalies, and sign off, writing ground-truth labels to a training CSV. In progress: the machine-learning anomaly model (Random Forest plus Isolation Forest, which activates once enough labelled data accumulates) and a custom power-control PCB with its own LED board.`
       },
       stm32: {
-        fullDesc: `Bare-metal peripheral driver library for the STM32F411RE Nucleo board written entirely from scratch with zero HAL abstraction. Every driver communicates with hardware via direct memory-mapped I/O register access using the device reference manual. Implemented drivers: GPIO (push-pull, open-drain, alternate function modes) and UART (polling and interrupt modes, baud rate configuration). Both drivers verified with a logic analyzer, with annotated scope captures included in the repo as build evidence.`
+        fullDesc: `Bare-metal peripheral drivers for the STM32F411RE Nucleo, written from scratch with zero HAL. Every driver talks to hardware through direct memory-mapped register access using the device reference manual. Complete and hardware-verified: GPIO (register-level LED toggle on PA5) and USART2 (transmit at 115200 baud), each flashed via st-flash and confirmed on a logic analyzer, with per-project READMEs as build evidence. The repo is structured as a numbered learning path with a public roadmap for the peripherals still to come: I2C (BME280 sensor), SPI (SSD1306 display), ADC with DMA circular-buffer sampling, and a FreeRTOS multitasking example.`
       },
       pk: {
         fullDesc: `Python simulation of drug concentration-time profiles using the two-compartment pharmacokinetic model. The simulator numerically integrates the ODE system describing distribution between central and peripheral compartments using SciPy's solve_ivp. Supported dosing routes: IV bolus (instantaneous), IV infusion (constant rate over defined duration), and oral (first-order absorption with adjustable bioavailability). Automatically computes key PK parameters: AUC (trapezoidal rule), Cmax, Tmax, and half-life. Model parameters validated against published PK data for real drugs including lidocaine, vancomycin, and acetaminophen. Outputs concentration-time curves via Matplotlib with labeled annotations.`
       },
       focus: {
         fullDesc: `Lightweight macOS menu bar app that quietly monitors operator fatigue and stress using two passive sensor streams. The camera thread runs MediaPipe face mesh at ~30fps to track blink rate and eye aspect ratio (EAR), while the keyboard thread uses pynput to measure typing speed, backspace error rate, and inter-keystroke pause duration. A scoring function combines these into Fatigue (camera + keyboard) and Stress (keyboard) scores; a weighted combined score ≥ 60 triggers a native macOS notification with a 10-minute cooldown. Architecture is a multi-threaded producer-consumer system with lock-guarded shared state, ensuring consumers always read consistent cross-modal snapshots. Data is logged to per-day CSV files every 10 seconds, visualized in a Flask-served dashboard that auto-refreshes every 5 seconds. All processing is local: no cloud, no accounts, no background services required.`
+      },
+      husky: {
+        fullDesc: `Full-stack web application that connects UConn students offering personal-care services (hair, nails, makeup, braids) with students who want to book them. The stack is a Vite front end and an Express REST API sharing one repository through npm workspaces, backed by SQLite via Node's built-in node:sqlite module. The data model separates public listing fields from private ones: a provider's exact location and contact method are never sent to the public browse endpoint and are disclosed to a requester only once that specific booking request is accepted. Listing ownership is checked server-side against the authenticated user rather than trusting client input, and a seed script resets the database to sample data on demand. Design decisions were recorded as they were made in a running BUILD_LOG.`
       }
     };
 
