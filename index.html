@@ -314,6 +314,19 @@
     .contact-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-tertiary); margin-bottom: 2px; }
     .contact-value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
+    /* ── RESUME ── */
+    #resume { background: var(--surface-solid); }
+    .resume-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; max-width: 940px; }
+    .resume-card { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .resume-card:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(0,0,0,0.08); }
+    .resume-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; }
+    .resume-icon svg { width: 22px; height: 22px; }
+    .resume-role { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-primary); }
+    .resume-note { font-size: 13px; line-height: 1.6; color: var(--text-secondary); flex: 1; }
+    .resume-actions { display: flex; gap: 12px; align-items: center; padding-top: 2px; }
+    .resume-word { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); text-decoration: none; }
+    .resume-word:hover { color: var(--accent); }
+
     /* ── SCROLL ANIMATION ── */
     .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
@@ -390,6 +403,12 @@
         </a>
       </li>
       <li>
+        <a href="#resume">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          Resume
+        </a>
+      </li>
+      <li>
         <a href="#contact">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Contact
@@ -432,10 +451,10 @@
         <p class="hero-eyebrow">Portfolio</p>
         <h1 class="hero-name">Mikey<br>Birmingham.</h1>
         <p class="hero-desc">
-          Cyber-Physical Systems · Embedded Software · Full-Stack Engineering.
-          I build systems end to end across the hardware-software boundary: register-level firmware,
-          an embedded computer-vision platform for a university microbiology lab, scientific simulation,
-          and full-stack web applications.
+          Cyber-Physical Systems · Embedded &amp; Firmware · Full-Stack.
+          Biomedical Engineering and Computer Science at UConn, and a CAPS Research Scholar in the Ryberg Lab.
+          I build across the hardware-software boundary, from register-level STM32 firmware to an embedded
+          computer-vision instrument and full-stack web apps. Focused on embedded and firmware engineering.
         </p>
         <a href="#projects" class="hero-cta">
           View My Projects
@@ -465,7 +484,7 @@
           </div>
           <div class="project-title">Automated Bacterial Colony Counter</div>
           <div class="project-desc">
-            Embedded imaging platform on a Raspberry Pi 5, built for the UConn Medical Laboratory Sciences lab, that backlights agar plates and quantifies bacterial colonies. The OpenCV pipeline uses background subtraction and watershed segmentation, reports every colony in distance-invariant mm², detects haemolysis halos, and flags outliers with a statistical anomaly layer across profiles for 39 organisms and 11 culture media. An in-app validation workflow lets a PhD correct results and sign off, logging ground-truth labels to CSV. A machine-learning anomaly model (Random Forest and Isolation Forest) and a custom power-control PCB are in progress.
+            Embedded imaging instrument on a Raspberry Pi 5, built for the Ryberg Lab at UConn, that backlights agar plates and quantifies bacterial colonies. The Python/OpenCV pipeline (background subtraction, watershed segmentation, distance-invariant mm² sizing, haemolysis detection) reaches 96.3% count accuracy and F1 0.957 on an 820-plate synthetic validation set of 13,690 ground-truth colonies, processing each plate in 62.3 ms with a false-positive rate under 0.10%. A two-layer anomaly detector (Z-score/IQR plus a Random Forest) runs over a 39-organism × 11-media profile system, and a self-validating test pipeline (59/59 unit tests, provenance tracking across 6,345 SLOC) keeps every run reproducible. A custom KiCad power-control PCB is designed and ordered.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">Python</span>
@@ -473,6 +492,7 @@
             <span class="tech-tag">Raspberry Pi 5</span>
             <span class="tech-tag">Flask</span>
             <span class="tech-tag">scikit-learn</span>
+            <span class="tech-tag">KiCad</span>
             <span class="tech-tag">Linux</span>
           </div>
           <div class="project-actions">
@@ -496,9 +516,9 @@
           <div class="project-icon" style="background: linear-gradient(135deg, #bf5af2, #ff375f)">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><rect x="2" y="9" width="6" height="6" rx="1"/><rect x="16" y="9" width="6" height="6" rx="1"/><line x1="9" y1="5" x2="8" y2="5"/><line x1="15" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="16"/></svg>
           </div>
-          <div class="project-title">STM32 Bare-Metal Peripheral Drivers</div>
+          <div class="project-title">STM32 Bare-Metal GPIO Driver</div>
           <div class="project-desc">
-            Register-level peripheral drivers for the STM32F411RE Nucleo, written from scratch with no HAL, addressing hardware registers directly via memory-mapped I/O. GPIO (register-level toggle on PA5) and USART2 (transmit at 115200 baud) are complete and verified on a logic analyzer, each with its own documentation and build evidence. Roadmap in the repo: I2C (BME280), SPI (SSD1306), ADC with DMA, and FreeRTOS.
+            A register-level GPIO driver for the STM32F411RE Nucleo, written from scratch in C with no HAL, configuring 9 MMIO registers across three peripherals (RCC, GPIOA, USART2) directly via memory-mapped I/O. The flash image is 752 bytes and the output signal timing is verified on a logic analyzer rather than assumed. Roadmap in the repo: UART, I2C, SPI, ADC with DMA, and FreeRTOS.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">C</span>
@@ -532,7 +552,7 @@
           </div>
           <div class="project-title">Two-Compartment Pharmacokinetic Simulator</div>
           <div class="project-desc">
-            Python-based simulator modeling drug concentration over time using a two-compartment PK model. Supports IV bolus, IV infusion, and oral dosing routes. Calculates AUC, Cmax, Tmax, and half-life. Validated against published pharmacokinetic parameters for real drugs.
+            Python two-compartment pharmacokinetic model that integrates the ODE system with an adaptive RK45 solver. Supports IV bolus, IV infusion, and oral dosing, and derives AUC, Cmax, Tmax, and half-life. Validated against the closed-form analytic solution to under 0.001% error on AUC and half-life, with a 3.03 ms single-dose runtime.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">Python</span>
@@ -563,7 +583,7 @@
           </div>
           <div class="project-title">FocusGuard: Fatigue &amp; Stress Monitor</div>
           <div class="project-desc">
-            Lightweight macOS menu bar app that monitors fatigue and stress in real-time using camera and keyboard behaviour. Tracks blink rate and eye openness via MediaPipe face mesh, plus typing speed, error rate, and pause length. Combines signals into Fatigue and Stress scores, displays them in the menu bar, and sends native macOS notifications when it's time to take a break. Includes a live Flask dashboard with trend charts. Fully local: no cloud, no accounts.
+            Lightweight macOS menu bar app that fuses two real-time signal streams, camera (blink rate and eye openness via MediaPipe face mesh) and keyboard behaviour, into live Fatigue and Stress scores. Built as a multi-threaded producer-consumer system with thread-safe lock-guarded shared state, it runs at 26 ms median sensor-to-score latency and 30 fps, holding 116 MB steady-state RSS with zero crashes over a 6-minute soak (10/10 unit tests). A live Flask dashboard charts current and historical scores. Fully local: no cloud, no accounts.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">Python</span>
@@ -597,7 +617,7 @@
           </div>
           <div class="project-title">HuskyBook: Peer-to-Peer Campus Directory</div>
           <div class="project-desc">
-            Full-stack web app connecting UConn students who offer personal-care services with students looking to book them. A Node and Express REST API, a Vite front end, and a SQLite database (Node's built-in node:sqlite) are wired together as npm workspaces. Account-based auth enforces listing ownership server-side, and a privacy-by-design disclosure model keeps sensitive fields such as exact location and contact out of the public browse endpoint, releasing them only after a provider accepts a request.
+            Full-stack web app connecting UConn students who offer personal-care services with students looking to book them. A Node and Express REST API (16 endpoints over a 5-table SQLite schema) and a Vite front end are wired together as npm workspaces, with magic-link auth and privacy-by-design access control: sensitive fields such as exact location and contact stay out of the public browse endpoint and release only after a provider accepts a request, with ownership enforced at the data layer. Read endpoints answer in 0.07 to 0.16 ms and sustain 10,600 requests per second, with 32/32 tests passing across 1,724 SLOC.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">JavaScript</span>
@@ -644,7 +664,7 @@
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Register-level drivers: GPIO, UART</span>
+            <span class="skill-name">Register-level MMIO driver: GPIO</span>
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
@@ -660,7 +680,7 @@
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">I2C, SPI, ADC/DMA, FreeRTOS</span>
+            <span class="skill-name">UART, I2C, SPI, ADC/DMA, FreeRTOS</span>
             <div class="proj-tags"><span class="proj-tag tag-soon">Roadmap</span></div>
           </div>
         </div>
@@ -674,15 +694,11 @@
           </div>
           <div class="skill-row">
             <span class="skill-name">Custom power-control PCB (KiCad)</span>
-            <div class="proj-tags"><span class="proj-tag tag-wip">In Progress</span></div>
+            <div class="proj-tags"><span class="proj-tag tag-wip">Ordered</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Buck converter, INA219 current sensing</span>
-            <div class="proj-tags"><span class="proj-tag tag-wip">In Progress</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">MOSFET LED driver, SMD assembly</span>
-            <div class="proj-tags"><span class="proj-tag tag-wip">In Progress</span></div>
+            <span class="skill-name">Raspberry Pi 5 bring-up &amp; kiosk deployment</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
         </div>
 
@@ -759,6 +775,63 @@
       </div>
     </section>
 
+    <!-- RESUME -->
+    <section id="resume">
+      <div class="fade-up">
+        <p class="section-eyebrow">Résumé</p>
+        <h2 class="section-title">Resume.</h2>
+        <p class="section-sub">Three versions tailored to the role. Grab the PDF that fits, or the editable Word file.</p>
+      </div>
+      <div class="resume-grid fade-up" style="transition-delay:0.1s">
+
+        <div class="resume-card">
+          <div class="resume-icon" style="background: linear-gradient(135deg, #bf5af2, #0a84ff)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><rect x="2" y="9" width="6" height="6" rx="1"/><rect x="16" y="9" width="6" height="6" rx="1"/></svg>
+          </div>
+          <div class="resume-role">Embedded &amp; Defense</div>
+          <div class="resume-note">Bare-metal firmware, embedded Linux, register-level drivers, and hardware validation for safety-critical work.</div>
+          <div class="resume-actions">
+            <a class="btn btn-demo" href="assets/resume/Birmingham_Embedded_Defense.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PDF
+            </a>
+            <a class="resume-word" href="assets/resume/Birmingham_Embedded_Defense.docx">Word</a>
+          </div>
+        </div>
+
+        <div class="resume-card">
+          <div class="resume-icon" style="background: linear-gradient(135deg, #0a84ff, #30d158)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div class="resume-role">General Engineering</div>
+          <div class="resume-note">A broad view across research, embedded systems, full-stack software, and validation, with the leadership record.</div>
+          <div class="resume-actions">
+            <a class="btn btn-demo" href="assets/resume/Birmingham_General_Engineering.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PDF
+            </a>
+            <a class="resume-word" href="assets/resume/Birmingham_General_Engineering.docx">Word</a>
+          </div>
+        </div>
+
+        <div class="resume-card">
+          <div class="resume-icon" style="background: linear-gradient(135deg, #ff375f, #ff9f0a)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="resume-role">Medical Devices</div>
+          <div class="resume-note">Instrumentation, biomedical measurement, pharmacokinetic modeling, and design-verification framing.</div>
+          <div class="resume-actions">
+            <a class="btn btn-demo" href="assets/resume/Birmingham_Medical_Devices.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PDF
+            </a>
+            <a class="resume-word" href="assets/resume/Birmingham_Medical_Devices.docx">Word</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- CONTACT -->
     <section id="contact">
       <div class="fade-up">
@@ -803,19 +876,19 @@
     // ── PROJECT DATA (extended descriptions for modal) ──
     const projectData = {
       colony: {
-        fullDesc: `Embedded imaging platform on a Raspberry Pi 5, built for the UConn Medical Laboratory Sciences lab to backlight agar plates and quantify bacterial colonies. A white LED panel is driven by hardware PWM through direct RP1 register access, and the operator UI is a Flask single-page app shown full-screen in Chromium kiosk mode. The OpenCV pipeline segments colonies with background subtraction and watershed, reports every colony in distance-invariant mm² regardless of camera height, estimates haemolysis by halo brightness under backlight, and runs a statistical anomaly layer over per-organism profiles spanning 39 organisms and 11 culture media. An in-app validation workflow lets a PhD click to correct colonies, label anomalies, and sign off, writing ground-truth labels to a training CSV. In progress: the machine-learning anomaly model (Random Forest plus Isolation Forest, which activates once enough labelled data accumulates) and a custom power-control PCB with its own LED board.`
+        fullDesc: `Embedded imaging instrument on a Raspberry Pi 5, built for the Ryberg Lab at UConn to backlight agar plates and quantify bacterial colonies. A white LED panel is driven by hardware PWM through direct RP1 register access, and the operator UI is a Flask single-page app shown full-screen in Chromium kiosk mode. The OpenCV pipeline segments colonies with background subtraction and watershed, reports every colony in distance-invariant mm² regardless of camera height, and estimates haemolysis by halo brightness; it reaches 96.3% count accuracy and F1 0.957 on an 820-plate synthetic validation set of 13,690 ground-truth colonies, at 62.3 ± 0.8 ms per plate with a false-positive rate under 0.10%. A two-layer anomaly detector pairs a statistical baseline (Z-score/IQR) with a Random Forest over a 39-organism × 11-media profile system, and an in-app workflow lets the lab lead correct and sign off results, logging ground-truth labels. Everything is backed by a self-validating test pipeline (59/59 unit tests, provenance tracking of git hash, environment snapshot, and input hash across 6,345 SLOC), and the Flask API answers in 71.1 ± 24.6 ms with zero failures across 120 timed runs. A custom KiCad power-control PCB is designed and ordered. Accepted to present at the UMBC Undergraduate Research Conference (Sep 2026).`
       },
       stm32: {
-        fullDesc: `Bare-metal peripheral drivers for the STM32F411RE Nucleo, written from scratch with zero HAL. Every driver talks to hardware through direct memory-mapped register access using the device reference manual. Complete and hardware-verified: GPIO (register-level LED toggle on PA5) and USART2 (transmit at 115200 baud), each flashed via st-flash and confirmed on a logic analyzer, with per-project READMEs as build evidence. The repo is structured as a numbered learning path with a public roadmap for the peripherals still to come: I2C (BME280 sensor), SPI (SSD1306 display), ADC with DMA circular-buffer sampling, and a FreeRTOS multitasking example.`
+        fullDesc: `A bare-metal GPIO driver for the STM32F411RE Nucleo, written from scratch in C with zero HAL. It talks to hardware through direct memory-mapped register access using the device reference manual, configuring 9 MMIO registers across three peripherals (RCC for clock enable, GPIOA for the pin, and USART2). The build is a 752-byte flash image at -O0, flashed with st-flash, and the output signal timing is verified on a 24 MHz logic analyzer rather than assumed to work. The repo is a numbered learning path with a public roadmap for the peripherals still to come: UART, I2C (BME280 sensor), SPI (SSD1306 display), ADC with DMA circular-buffer sampling, and a FreeRTOS multitasking example.`
       },
       pk: {
-        fullDesc: `Python simulation of drug concentration-time profiles using the two-compartment pharmacokinetic model. The simulator numerically integrates the ODE system describing distribution between central and peripheral compartments using SciPy's solve_ivp. Supported dosing routes: IV bolus (instantaneous), IV infusion (constant rate over defined duration), and oral (first-order absorption with adjustable bioavailability). Automatically computes key PK parameters: AUC (trapezoidal rule), Cmax, Tmax, and half-life. Model parameters validated against published PK data for real drugs including lidocaine, vancomycin, and acetaminophen. Outputs concentration-time curves via Matplotlib with labeled annotations.`
+        fullDesc: `Python simulation of drug concentration-time profiles using the two-compartment pharmacokinetic model. The simulator numerically integrates the ODE system describing distribution between central and peripheral compartments using SciPy's solve_ivp with an adaptive RK45 method. Supported dosing routes: IV bolus (instantaneous), IV infusion (constant rate over a defined duration), and oral (first-order absorption with adjustable bioavailability). It automatically computes AUC (trapezoidal rule), Cmax, Tmax, and half-life. The solver is validated against the closed-form analytic solution to under 0.001% error on AUC and terminal half-life, with a single-dose runtime of about 3.03 ms. Outputs concentration-time curves via Matplotlib with labeled annotations.`
       },
       focus: {
-        fullDesc: `Lightweight macOS menu bar app that quietly monitors operator fatigue and stress using two passive sensor streams. The camera thread runs MediaPipe face mesh at ~30fps to track blink rate and eye aspect ratio (EAR), while the keyboard thread uses pynput to measure typing speed, backspace error rate, and inter-keystroke pause duration. A scoring function combines these into Fatigue (camera + keyboard) and Stress (keyboard) scores; a weighted combined score ≥ 60 triggers a native macOS notification with a 10-minute cooldown. Architecture is a multi-threaded producer-consumer system with lock-guarded shared state, ensuring consumers always read consistent cross-modal snapshots. Data is logged to per-day CSV files every 10 seconds, visualized in a Flask-served dashboard that auto-refreshes every 5 seconds. All processing is local: no cloud, no accounts, no background services required.`
+        fullDesc: `Lightweight macOS menu bar app that quietly monitors operator fatigue and stress using two passive sensor streams. The camera thread runs MediaPipe face mesh at ~30fps to track blink rate and eye aspect ratio (EAR), while the keyboard thread uses pynput to measure typing speed, backspace error rate, and inter-keystroke pause duration. A scoring function combines these into Fatigue (camera + keyboard) and Stress (keyboard) scores; a weighted combined score ≥ 60 triggers a native macOS notification with a 10-minute cooldown. Architecture is a multi-threaded producer-consumer system with lock-guarded shared state, ensuring consumers always read consistent cross-modal snapshots. It sustains 26 ms median sensor-to-score latency at 30 fps, holds 116 MB steady-state RSS, and logged zero crashes over a 6-minute soak (10/10 unit tests, 1,008 SLOC). Data is logged to per-day CSV files every 10 seconds, visualized in a Flask-served dashboard that auto-refreshes every 5 seconds. All processing is local: no cloud, no accounts, no background services required.`
       },
       husky: {
-        fullDesc: `Full-stack web application that connects UConn students offering personal-care services (hair, nails, makeup, braids) with students who want to book them. The stack is a Vite front end and an Express REST API sharing one repository through npm workspaces, backed by SQLite via Node's built-in node:sqlite module. The data model separates public listing fields from private ones: a provider's exact location and contact method are never sent to the public browse endpoint and are disclosed to a requester only once that specific booking request is accepted. Listing ownership is checked server-side against the authenticated user rather than trusting client input, and a seed script resets the database to sample data on demand. Design decisions were recorded as they were made in a running BUILD_LOG.`
+        fullDesc: `Full-stack web application that connects UConn students offering personal-care services (hair, nails, makeup, braids) with students who want to book them. The stack is a Vite front end and an Express REST API sharing one repository through npm workspaces, backed by SQLite via Node's built-in node:sqlite module. The data model separates public listing fields from private ones: a provider's exact location and contact method are never sent to the public browse endpoint and are disclosed to a requester only once that specific booking request is accepted. Listing ownership is checked server-side against the authenticated user rather than trusting client input, and a seed script resets the database to sample data on demand. The REST surface spans 16 endpoints over a 5-table SQLite schema with magic-link auth; read endpoints answer in 0.07 to 0.16 ms and sustain 10,600 requests per second, with 32/32 tests passing across 1,724 SLOC. Design decisions were recorded as they were made in a running BUILD_LOG.`
       }
     };
 
