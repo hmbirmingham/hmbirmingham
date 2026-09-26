@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blind Validation Memo · Colony Counter</title>
+  <meta name="description" content="Blind validation of an automated bacterial colony counter: 250 held-out synthetic plates, pooled F1 0.869, precision 1.000. Hynes Birmingham, Ryberg Lab, UConn." />
+  <style>
+    :root {
+      --bg: #f5f5f7; --surface: rgba(255,255,255,0.72); --surface-solid: #ffffff;
+      --border: rgba(0,0,0,0.08); --text-primary: #1d1d1f; --text-secondary: #6e6e73;
+      --text-tertiary: #a1a1a6; --accent: #30d158; --accent-ink: #0071e3; --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #000000; --surface: rgba(28,28,30,0.85); --surface-solid: #1c1c1e;
+        --border: rgba(255,255,255,0.10); --text-primary: #f5f5f7; --text-secondary: #a1a1a6;
+        --text-tertiary: #6e6e73; --accent: #30d158; --accent-ink: #2997ff; }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      padding: 13px 24px; background: var(--surface); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); }
+    .back { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--accent-ink); }
+    .back svg { width: 15px; height: 15px; }
+    .topbar-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .tb-btn { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; padding: 8px 15px; border-radius: 980px; text-decoration: none; border: 1px solid var(--border); color: var(--text-primary); background: var(--surface-solid); }
+    .tb-btn svg { width: 14px; height: 14px; }
+    .tb-btn.solid { background: var(--accent); color: #003314; border-color: transparent; }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 40px 20px 80px; }
+    .lead { max-width: 820px; margin: 0 auto 26px; }
+    .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .h1 { font-size: clamp(28px, 4.5vw, 40px); font-weight: 700; letter-spacing: -1.2px; line-height: 1.08; margin-bottom: 14px; }
+    .sub { font-size: 16.5px; color: var(--text-secondary); }
+    .sub b { color: var(--text-primary); font-weight: 600; }
+
+    .paper { background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.14); }
+    .paper img { width: 100%; display: block; }
+    .paper img + img { border-top: 1px solid rgba(0,0,0,0.08); }
+
+    .foot { max-width: 820px; margin: 26px auto 0; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .foot a { color: var(--accent-ink); text-decoration: none; font-weight: 600; }
+    @media (max-width: 600px) { .wrap { padding: 28px 14px 64px; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back" href="index.html#projects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Portfolio
+    </a>
+    <div class="topbar-actions">
+      <a class="tb-btn" href="https://github.com/hmbirmingham/imaging-system" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        Source
+      </a>
+      <a class="tb-btn solid" href="assets/imaging/Colony_Counter_Blind_Validation_Memo.pdf" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="lead">
+      <p class="eyebrow">Blind Validation · Ryberg Lab, UConn</p>
+      <h1 class="h1">Blind Validation of an Automated Colony Counter</h1>
+      <p class="sub">The system run blind against 250 held-out synthetic plates it had never seen, with ground truth scored only after detection returned. Pooled <b>F1 0.869</b> (target 0.90), <b>precision 1.000</b> on every plate, and a <b>15.75%</b> mean count error, including the two sets that missed target and why.</p>
+    </div>
+
+    <div class="paper">
+      <img src="assets/imaging/memo_p1.png" alt="Blind validation memo, page 1" />
+      <img src="assets/imaging/memo_p2.png" alt="Blind validation memo, page 2" loading="lazy" />
+      <img src="assets/imaging/memo_p3.png" alt="Blind validation memo, page 3" loading="lazy" />
+      <img src="assets/imaging/memo_p4.png" alt="Blind validation memo, page 4" loading="lazy" />
+    </div>
+
+    <p class="foot">
+      Full pipeline is open source at <a href="https://github.com/hmbirmingham/imaging-system" target="_blank" rel="noopener">github.com/hmbirmingham/imaging-system</a>.
+      See the interactive walkthrough on the <a href="imaging-demo.html">Colony Counter project page</a>.
+    </p>
+  </div>
+</body>
+</html>
