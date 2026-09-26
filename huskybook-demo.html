@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HuskyBook · Case Study · Mikey Birmingham</title>
+  <meta name="description" content="HuskyBook: a full-stack campus services directory with privacy-by-construction access control. Built, shipped, and archived, with the reasoning why." />
+  <style>
+    :root {
+      --bg: #f5f5f7; --surface: rgba(255,255,255,0.72); --surface-solid: #ffffff;
+      --border: rgba(0,0,0,0.08); --text-primary: #1d1d1f; --text-secondary: #6e6e73;
+      --text-tertiary: #a1a1a6; --accent: #5e5ce6; --accent-ink: #0071e3; --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #000000; --surface: rgba(28,28,30,0.85); --surface-solid: #1c1c1e;
+        --border: rgba(255,255,255,0.10); --text-primary: #f5f5f7; --text-secondary: #a1a1a6;
+        --text-tertiary: #6e6e73; --accent: #7d7bff; --accent-ink: #2997ff; }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; background: var(--surface); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); }
+    .back { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--accent-ink); }
+    .back svg { width: 15px; height: 15px; }
+    .topbar-gh { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; text-decoration: none;
+      color: var(--text-primary); padding: 8px 14px; border-radius: 980px; border: 1px solid var(--border); background: var(--surface-solid); }
+    .topbar-gh svg { width: 15px; height: 15px; }
+
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 24px 96px; }
+    .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .hero-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 18px; }
+    .hero-sub { font-size: 18px; color: var(--text-secondary); max-width: 720px; margin-bottom: 22px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { font-size: 11px; font-weight: 500; padding: 4px 11px; border-radius: 980px; background: rgba(94,92,230,0.12); color: var(--accent); border: 1px solid rgba(94,92,230,0.22); }
+
+    .note { display: flex; gap: 10px; align-items: flex-start; background: rgba(94,92,230,0.08); border: 1px solid rgba(94,92,230,0.2);
+      border-radius: 14px; padding: 14px 16px; margin: 28px 0 8px; font-size: 14px; color: var(--text-secondary); }
+    .note svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--accent); margin-top: 1px; }
+
+    .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); margin: 46px 0 14px; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .feature { background: var(--surface-solid); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+    .feature-t { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .feature-d { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .feature-d code { font-size: 12px; background: rgba(94,92,230,0.1); padding: 1px 5px; border-radius: 5px; }
+
+    .shot { background: var(--surface-solid); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-top: 18px; box-shadow: 0 12px 34px rgba(0,0,0,0.07); }
+    .shot img { width: 100%; height: auto; border-radius: 10px; display: block; border: 1px solid var(--border); cursor: zoom-in; }
+    .shot-cap { font-size: 13.5px; color: var(--text-secondary); margin-top: 12px; line-height: 1.6; }
+    .shot-cap b { color: var(--text-primary); font-weight: 600; }
+
+    .why { background: var(--surface-solid); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 14px; padding: 22px 24px; margin-top: 16px; }
+    .why p { font-size: 15px; color: var(--text-secondary); line-height: 1.72; }
+    .why p + p { margin-top: 12px; }
+    .why b { color: var(--text-primary); font-weight: 600; }
+
+    .lb { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lb.open { display: flex; }
+    .lb img { max-width: 96vw; max-height: 92vh; border-radius: 10px; }
+
+    @media (max-width: 600px) { .wrap { padding: 36px 16px 72px; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back" href="index.html#projects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Portfolio
+    </a>
+    <a class="topbar-gh" href="https://github.com/hmbirmingham/huskybook" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      Source
+    </a>
+  </div>
+
+  <div class="wrap">
+    <p class="hero-eyebrow">Case Study · Full-Stack · Archived</p>
+    <h1 class="hero-title">HuskyBook</h1>
+    <p class="hero-sub">
+      A peer-to-peer directory connecting UConn students who offer personal-care services with students
+      looking to book one. Built and shipped as a full-stack app, then archived on purpose. The interesting
+      part is an access-control model where privacy is impossible to leak by accident.
+    </p>
+    <div class="tags">
+      <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">SQLite</span><span class="tag">Vite</span><span class="tag">REST API</span><span class="tag">Magic-link auth</span>
+    </div>
+
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span>Archived September 2026 and no longer deployed. It still runs locally; the source is open and these screenshots are from the working app. Read on for what it did and why I stopped.</span>
+    </div>
+
+    <div class="section-label">What Made It Interesting</div>
+    <div class="feature-grid">
+      <div class="feature"><div class="feature-t">Privacy by construction</div><div class="feature-d">Exact location and contact never leave the server until a specific request is accepted. It is enforced in two places: a <code>CASE WHEN status = 'accepted'</code> and the serializers, so no route can leak those fields by forgetting to strip them. They are never in the object to strip.</div></div>
+      <div class="feature"><div class="feature-t">Server-side ownership</div><div class="feature-d">Only the account that owns a listing can act on it, checked against the session rather than any id the client supplies.</div></div>
+      <div class="feature"><div class="feature-t">Tested over real HTTP</div><div class="feature-d">32 tests drive a real magic-link sign-in and exercise the privacy and ownership rules end to end, not a faked session.</div></div>
+      <div class="feature"><div class="feature-t">The stack</div><div class="feature-d">A Node and Express REST API (16 endpoints over a 5-table SQLite schema) and a Vite front end, wired as npm workspaces.</div></div>
+    </div>
+
+    <div class="section-label">The Flow</div>
+
+    <div class="shot">
+      <img src="assets/huskybook/find-a-service.png" alt="HuskyBook public directory of providers">
+      <p class="shot-cap"><b>The public directory.</b> Building and campus zone are shown; exact room numbers and contact details are not, until a request is accepted.</p>
+    </div>
+    <div class="shot">
+      <img src="assets/huskybook/request-flow.png" alt="Sending a request, with a modal stating the privacy rule">
+      <p class="shot-cap"><b>Sending a request.</b> The modal states the privacy rule up front, before you commit to anything: exact location and contact unlock only after the provider accepts.</p>
+    </div>
+    <div class="shot">
+      <img src="assets/huskybook/manage-requests.png" alt="The provider side, accepting or declining a request">
+      <p class="shot-cap"><b>The provider side.</b> Accepting a request is the exact moment the location unlocks, and only for that one requester.</p>
+    </div>
+
+    <div class="section-label">Why I Stopped</div>
+    <div class="why">
+      <p>HuskyBook works. It just solves a problem neither side actually has. Unlicensed student providers already book through Instagram and group chats, at zero cost and to an audience they have already built. Licensed businesses already use real booking tools. A directory sitting between the two adds a step for everybody and removes one for nobody.</p>
+      <p>Charging a fee would have made it worse: routing money for unlicensed services through a platform I run is a liability worth taking on only for a product people are actually asking for, and nobody was. So I stopped here instead of building features nobody needed, and <b>archived it as a finished, honest piece of work rather than a live product chasing users it did not have.</b></p>
+    </div>
+  </div>
+
+  <div class="lb" id="lb"><img id="lbImg" src="" alt=""></div>
+  <script>
+    const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+    document.querySelectorAll('.shot img').forEach(img => img.addEventListener('click', () => { lbImg.src = img.src; lb.classList.add('open'); }));
+    lb.addEventListener('click', () => lb.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+  </script>
+</body>
+</html>
