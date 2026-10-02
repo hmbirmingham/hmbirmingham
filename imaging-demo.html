@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Colony Counter · Demo · Mikey Birmingham</title>
+  <title>Colony Counter · Results · Mikey Birmingham</title>
   <style>
     :root {
       --bg: #f5f5f7; --surface-solid: #ffffff; --border: rgba(0,0,0,0.08);
@@ -176,114 +176,16 @@
   </div>
 
   <div class="wrap">
-    <p class="hero-eyebrow">Demo · Embedded Imaging</p>
+    <p class="hero-eyebrow">Results · Embedded Imaging</p>
     <h1 class="hero-title">Automated Bacterial<br>Colony Counter</h1>
     <p class="hero-sub">
-      An end-to-end embedded imaging system on Raspberry Pi: controlled LED illumination, a custom power
-      PCB, and an OpenCV pipeline that segments and counts colonies with two-layer anomaly detection
-      (statistical filtering + a Random Forest classifier). Below is an interactive walkthrough of the
-      touch GUI: capture, quantify, and review, using real annotated plate output.
+      An embedded imaging system for Raspberry Pi 5: an RP1 register-level PWM driver for the LED
+      illumination, and an OpenCV pipeline that segments and counts colonies, with a statistical anomaly
+      layer and an ML layer that activates once enough colonies are labelled. Below are the
+      blind-evaluation results; the memo has the full write-up.
     </p>
     <div class="tags">
-      <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Raspberry Pi</span><span class="tag">scikit-learn</span><span class="tag">Flask</span><span class="tag">KiCad</span>
-    </div>
-
-    <div class="note">
-      <span>Interactive mockup of the operator GUI. The live system runs headless on a Raspberry Pi with a camera and LED ring. This recreates the capture → quantify → review flow with genuine pipeline output.</span>
-      <button class="replay" id="replayBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        Replay
-      </button>
-    </div>
-
-    <!-- ── App ── -->
-    <div class="app">
-      <div class="app-bar">
-        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="app-bar-title">Plate Imaging System · localhost:5000</span>
-      </div>
-
-      <!-- sidebar -->
-      <nav class="side">
-        <svg class="side-brand" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="var(--accent)" stroke-width="2"/><circle cx="14" cy="14" r="6" fill="var(--accent)" opacity=".25"/><circle cx="14" cy="14" r="2" fill="var(--accent)"/></svg>
-        <button class="nav-btn active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M9 2h6l2 3H5L7 2zM3 7h18a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/></svg>Capture</button>
-        <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Library</button>
-      </nav>
-
-      <!-- capture view -->
-      <div class="capture">
-        <!-- preview -->
-        <div class="preview-card">
-          <div class="preview-head">
-            <span class="preview-title">Live Preview</span>
-            <span class="badge green dot">Live</span>
-          </div>
-          <div class="preview-stage" id="stage">
-            <img src="assets/imaging/plate_busy.jpg" alt="Agar plate under LED illumination" id="previewImg">
-            <div class="scan" id="scan"></div>
-            <div class="flash" id="flash"></div>
-          </div>
-          <div class="status" id="status"><span class="sdot"></span><span id="statusText">Ready</span></div>
-        </div>
-
-        <!-- controls -->
-        <div class="controls">
-          <div class="card">
-            <div class="card-title">Backlight</div>
-            <div class="slider-row">
-              <span class="slider-label">Brightness</span>
-              <div class="track"><div class="fill" style="width:80%"></div><div class="knob" style="left:80%"></div></div>
-              <span class="pill">80%</span>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">Image</div>
-            <div class="slider-row">
-              <span class="slider-label">Contrast</span>
-              <div class="track"><div class="fill" style="width:55%"></div><div class="knob" style="left:55%"></div></div>
-              <span class="pill">1.1×</span>
-            </div>
-            <div class="slider-row">
-              <span class="slider-label">Saturation</span>
-              <div class="track"><div class="fill" style="width:50%"></div><div class="knob" style="left:50%"></div></div>
-              <span class="pill">1.0×</span>
-            </div>
-          </div>
-
-          <button class="btn primary" id="captureBtn">Capture Image</button>
-          <button class="btn success" id="quantifyBtn" disabled>Quantify Selected</button>
-
-          <div class="card">
-            <div class="card-title">Recent</div>
-            <div class="strip" id="strip">
-              <span class="strip-empty" id="stripEmpty">No captures yet</span>
-              <img class="thumb" id="thumb" src="assets/imaging/plate_busy.jpg" alt="captured thumbnail">
-            </div>
-          </div>
-
-          <div class="card results">
-            <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
-              Results <span class="badge blue" id="resBadge" style="display:none">39 colonies</span>
-            </div>
-            <div class="res-empty" id="resEmpty">Capture a plate, then run <strong>Quantify Selected</strong>.</div>
-            <div class="spinner-wrap" id="spinner"><div class="spinner"></div><span>Analysing colonies…</span></div>
-            <div class="res-content" id="resContent">
-              <div class="stats">
-                <div class="stat reveal"><div class="stat-k">Total Count</div><div class="stat-v">39</div></div>
-                <div class="stat reveal"><div class="stat-k">Anomalies</div><div class="stat-v red">4</div></div>
-                <div class="stat reveal"><div class="stat-k">Mean Area</div><div class="stat-v">2.14 <small>mm²</small></div></div>
-                <div class="stat reveal"><div class="stat-k">Confluence</div><div class="stat-v">7.8 <small>%</small></div></div>
-              </div>
-              <div class="col-list">
-                <div class="col-row reveal"><span class="col-id">#9</span><span class="col-meta">2.9 mm² · circ 0.71</span><span class="col-flag bad">Irregular</span></div>
-                <div class="col-row reveal"><span class="col-id">#29</span><span class="col-meta">3.4 mm² · circ 0.63</span><span class="col-flag bad">ML anomaly</span></div>
-                <div class="col-row reveal"><span class="col-id">#20</span><span class="col-meta">2.1 mm² · circ 0.92</span><span class="col-flag ok">Clean</span></div>
-                <div class="col-row reveal"><span class="col-id">#5</span><span class="col-meta">1.8 mm² · circ 0.95</span><span class="col-flag ok">Clean</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Raspberry Pi</span><span class="tag">scikit-learn</span><span class="tag">Flask</span>
     </div>
 
     <!-- Technical Memo -->
@@ -304,87 +206,15 @@
           </a>
         </div>
       </div>
-      <p class="memo-sub">The system run blind against 250 held-out synthetic plates it had never seen, with ground truth loaded only after detection returned. It reports the real numbers, including the two sets that missed target and the segmentation failure mode behind them, and benchmarks against peer-reviewed results for OpenCFU and ColonyDoc-It.</p>
+      <p class="memo-sub">The system scored blind on 250 synthetic plates, with ground truth loaded only after detection returned. A watershed bug found during the run was fixed and the set re-run; the memo documents the change. The memo reports the real numbers, including the two sets that missed target and the segmentation failure mode behind them, and sets them next to published error rates for OpenCFU and ColonyDoc-It.</p>
       <div class="memo-stats">
-        <div class="memo-stat"><div class="ms-v">0.869</div><div class="ms-k">Pooled F1 across 250 blind plates (target 0.90)</div></div>
+        <div class="memo-stat"><div class="ms-v">0.869</div><div class="ms-k">Pooled F1 across 250 blind-scored plates (target 0.90)</div></div>
         <div class="memo-stat"><div class="ms-v">1.000</div><div class="ms-k">Precision on every plate, zero false colonies</div></div>
-        <div class="memo-stat"><div class="ms-v">3 / 5</div><div class="ms-k">Held-out sets at or above target</div></div>
+        <div class="memo-stat"><div class="ms-v">3 / 5</div><div class="ms-k">Test sets at or above target</div></div>
         <div class="memo-stat"><div class="ms-v">15.75%</div><div class="ms-k">Mean count error (5.31% on passing sets)</div></div>
       </div>
     </div>
   </div>
 
-  <script>
-    const els = {
-      stage: document.getElementById('stage'),
-      scan: document.getElementById('scan'),
-      flash: document.getElementById('flash'),
-      status: document.getElementById('status'),
-      statusText: document.getElementById('statusText'),
-      captureBtn: document.getElementById('captureBtn'),
-      quantifyBtn: document.getElementById('quantifyBtn'),
-      stripEmpty: document.getElementById('stripEmpty'),
-      thumb: document.getElementById('thumb'),
-      resBadge: document.getElementById('resBadge'),
-      resEmpty: document.getElementById('resEmpty'),
-      spinner: document.getElementById('spinner'),
-      resContent: document.getElementById('resContent'),
-      reveals: [],
-    };
-
-    let timers = [];
-    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-    const setStatus = (txt, cls) => { els.statusText.textContent = txt; els.status.className = 'status' + (cls ? ' ' + cls : ''); };
-
-    function reset() {
-      timers.forEach(clearTimeout); timers = [];
-      els.stage.classList.remove('analyzed');
-      els.scan.classList.remove('run');
-      els.flash.classList.remove('fire');
-      els.captureBtn.classList.remove('press');
-      els.quantifyBtn.classList.remove('pulse', 'press');
-      els.quantifyBtn.disabled = true;
-      els.stripEmpty.style.display = '';
-      els.thumb.classList.remove('show', 'sel');
-      els.resBadge.style.display = 'none';
-      els.resEmpty.style.display = '';
-      els.spinner.style.display = 'none';
-      els.resContent.style.display = 'none';
-      document.querySelectorAll('.reveal').forEach(r => r.classList.remove('in'));
-      setStatus('Ready', '');
-    }
-
-    function run() {
-      reset();
-      // 1. capture
-      at(900,  () => { els.captureBtn.classList.add('press'); setStatus('Capturing frame…', 'busy'); els.flash.classList.add('fire'); });
-      at(1100, () => els.captureBtn.classList.remove('press'));
-      at(1450, () => { els.stripEmpty.style.display = 'none'; els.thumb.classList.add('show'); setStatus('Saved  plate_20250622_143501.jpg', 'done'); });
-      // 2. select + enable quantify
-      at(2100, () => { els.thumb.classList.add('sel'); els.quantifyBtn.disabled = false; els.quantifyBtn.classList.add('pulse'); setStatus('Selected 1 capture · ready to quantify', ''); });
-      // 3. quantify
-      at(3100, () => { els.quantifyBtn.classList.remove('pulse'); els.quantifyBtn.classList.add('press'); });
-      at(3300, () => els.quantifyBtn.classList.remove('press'));
-      at(3350, () => { setStatus('Running colony analysis…', 'busy'); els.resEmpty.style.display = 'none'; els.spinner.style.display = 'flex'; els.scan.classList.add('run'); });
-      at(3400, () => els.stage.classList.add('analyzed'));
-      // 4. results
-      at(4950, () => {
-        els.spinner.style.display = 'none';
-        els.resContent.style.display = 'block';
-        els.resBadge.style.display = 'inline-flex';
-        setStatus('Analysis complete · 39 colonies · 4 anomalies', 'done');
-        document.querySelectorAll('.reveal').forEach((r, i) => at(i * 90, () => r.classList.add('in')));
-      });
-      // 5. loop
-      at(9200, run);
-    }
-
-    document.getElementById('replayBtn').addEventListener('click', run);
-    // start when visible
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { run(); io.disconnect(); } });
-    }, { threshold: 0.25 });
-    io.observe(document.querySelector('.app'));
-  </script>
 </body>
 </html>
