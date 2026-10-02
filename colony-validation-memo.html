@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blind Validation Memo · Colony Counter</title>
-  <meta name="description" content="Blind validation of an automated bacterial colony counter: 250 held-out synthetic plates, pooled F1 0.869, precision 1.000. Hynes Birmingham, Ryberg Lab, UConn." />
+  <meta name="description" content="Blind validation of an automated bacterial colony counter: 250 blind-scored synthetic plates, pooled F1 0.869, precision 1.000. Hynes Birmingham, Ryberg Lab, UConn." />
   <style>
     :root {
       --bg: #f5f5f7; --surface: rgba(255,255,255,0.72); --surface-solid: #ffffff;
@@ -66,7 +66,7 @@
     <div class="lead">
       <p class="eyebrow">Blind Validation · Ryberg Lab, UConn</p>
       <h1 class="h1">Blind Validation of an Automated Colony Counter</h1>
-      <p class="sub">The system run blind against 250 held-out synthetic plates it had never seen, with ground truth scored only after detection returned. Pooled <b>F1 0.869</b> (target 0.90), <b>precision 1.000</b> on every plate, and a <b>15.75%</b> mean count error, including the two sets that missed target and why.</p>
+      <p class="sub">The system scored blind on 250 synthetic plates, with ground truth loaded only after detection returned. A watershed bug found during the run was fixed and the set re-run; the memo documents the change. Pooled <b>F1 0.869</b> (target 0.90), <b>precision 1.000</b> on every plate, and a <b>15.75%</b> mean count error, including the two sets that missed target and why.</p>
     </div>
 
     <div class="paper">
