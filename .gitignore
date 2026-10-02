@@ -2,9 +2,6 @@
 .DS_Store
 Thumbs.db
 
-# Editor / tooling
-.claude/
-
 # Local helpers & config — not part of the published site
 sync.sh
 hmbirmingham-me.zone
