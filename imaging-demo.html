@@ -206,12 +206,12 @@
           </a>
         </div>
       </div>
-      <p class="memo-sub">The system scored blind on 250 synthetic plates, with ground truth loaded only after detection returned. A watershed bug found during the run was fixed and the set re-run; the memo documents the change. The memo reports the real numbers, including the two sets that missed target and the segmentation failure mode behind them, and sets them next to published error rates for OpenCFU and ColonyDoc-It.</p>
+      <p class="memo-sub">The system scored blind on 250 synthetic plates, with ground truth loaded only after detection returned. A watershed bug found during the run was fixed and the set re-run; the memo documents the change. The memo reports the real numbers, including the set that still misses target and the segmentation failure mode behind it, and sets them next to published error rates for OpenCFU and ColonyDoc-It. Figures revised 13 Oct 2026 after a second bug — contour extraction discarding valid colony splits — was found and fixed.</p>
       <div class="memo-stats">
-        <div class="memo-stat"><div class="ms-v">0.869</div><div class="ms-k">Pooled F1 across 250 blind-scored plates (target 0.90)</div></div>
-        <div class="memo-stat"><div class="ms-v">1.000</div><div class="ms-k">Precision on every plate, zero false colonies</div></div>
-        <div class="memo-stat"><div class="ms-v">3 / 5</div><div class="ms-k">Test sets at or above target</div></div>
-        <div class="memo-stat"><div class="ms-v">15.75%</div><div class="ms-k">Mean count error (5.31% on passing sets)</div></div>
+        <div class="memo-stat"><div class="ms-v">0.918</div><div class="ms-k">Pooled F1 across 250 blind-scored plates (target 0.90)</div></div>
+        <div class="memo-stat"><div class="ms-v">0.995</div><div class="ms-k">Precision across 250 plates, 41 false colonies</div></div>
+        <div class="memo-stat"><div class="ms-v">4 / 5</div><div class="ms-k">Test sets at or above target</div></div>
+        <div class="memo-stat"><div class="ms-v">11.43%</div><div class="ms-k">Mean count error (8.89% on passing sets)</div></div>
       </div>
     </div>
   </div>
