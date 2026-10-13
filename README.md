@@ -1,5 +1,3 @@
-# Mikey Birmingham
-
-Biomedical Engineering + Computer Science @ UConn | embedded firmware & biomedical instrumentation.
+# Mikey Birmingham  BME @ UConn 
 
 🔗 **Portfolio:** [hmbirmingham.me](https://hmbirmingham.me)
