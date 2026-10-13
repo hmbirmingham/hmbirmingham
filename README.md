@@ -1,3 +1,3 @@
-# Mikey Birmingham  BME @ UConn 
+# Mikey Birmingham  
 
-🔗 **Portfolio:** [hmbirmingham.me](https://hmbirmingham.me)
+BME @ UConn | 🔗 **Portfolio:** [hmbirmingham.me](https://hmbirmingham.me)
