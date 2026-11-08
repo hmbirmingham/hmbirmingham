@@ -11,3 +11,9 @@ pharmasim/
 imaging-system/
 focus-guard/
 Portfolio SIte/
+
+# IDE / tool config dirs
+.claude/
+
+# Resume source files (docx, editable formats — PDF is tracked)
+assets/resume/Resume/
