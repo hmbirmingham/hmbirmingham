@@ -257,6 +257,22 @@
     }
     .modal-overlay.open .modal { transform: scale(1) translateY(0); }
 
+    .modal-metrics { display: flex; gap: 10px; flex-wrap: wrap; }
+    .modal-metric {
+      flex: 1; min-width: 76px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 16px; display: flex; flex-direction: column; gap: 3px;
+    }
+    .modal-metric-value {
+      font-size: 21px; font-weight: 700; letter-spacing: -0.5px;
+      color: var(--text-primary); line-height: 1.1;
+    }
+    .modal-metric-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--text-tertiary);
+    }
+    .modal-body { display: flex; flex-direction: column; gap: 18px; }
+
     .modal-close {
       position: absolute; top: 18px; right: 18px;
       width: 30px; height: 30px; border-radius: 50%;
@@ -446,11 +462,9 @@
         <div id="modalIcon"></div>
         <h2 class="modal-title" id="modalTitle"></h2>
       </div>
-      <div class="modal-divider"></div>
-      <div>
-        <div class="modal-section-label">Overview</div>
-        <p class="modal-desc" id="modalDesc"></p>
-      </div>
+      <div class="modal-metrics" id="modalMetrics"></div>
+      <div class="modal-divider" id="modalMetricsDivider"></div>
+      <div class="modal-body" id="modalBody"></div>
       <div>
         <div class="modal-section-label">Technologies</div>
         <div class="tech-tags" id="modalTags"></div>
@@ -469,10 +483,10 @@
         <p class="hero-eyebrow">Portfolio</p>
         <h1 class="hero-name">Mikey<br>Birmingham.</h1>
         <p class="hero-desc">
-          Cyber-Physical Systems · Embedded &amp; Firmware · Data &amp; Analytics.
-          Biomedical Engineering and Computer Science at UConn, and a CAPS Research Scholar in the Ryberg Lab.
-          I work across the hardware-software boundary, from register-level STM32 firmware to an embedded
-          computer-vision instrument with a reproducible blind evaluation. Focused on embedded and firmware engineering.
+          Biomedical Engineering + Computer Science at UConn · CAPS Research Scholar, Ryberg Lab · Class of 2029.
+          I work at the hardware-software boundary: register-level bare-metal firmware on one end,
+          an embedded computer-vision instrument with a blind-validated evaluation on the other.
+          Targeting embedded and firmware engineering roles.
         </p>
         <div class="hero-ctas">
           <a href="#projects" class="hero-cta">
@@ -541,7 +555,7 @@
           </div>
           <div class="project-title">STM32 Bare-Metal Register-Level C</div>
           <div class="project-desc">
-            Register-level C for the STM32F411RE Nucleo with no HAL: a GPIO blinky on PA5 and a USART2 transmit loop, both configured through direct memory-mapped register writes to RCC, GPIOA, and USART2. The blinky builds to a 752-byte flash image at -O0. Roadmap in the repo: I2C, SPI, ADC with DMA, and FreeRTOS.
+            Register-level C for the STM32F411RE Nucleo with no HAL. 01-blinky toggles PA5 through direct RCC clock enable and GPIOA register writes, logic-analyzer verified, 752-byte flash image at -O0. USART2 transmit exercises are written but have a known baud-rate bug being debugged. Roadmap: I2C, SPI, ADC with DMA, FreeRTOS.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">C</span>
@@ -732,13 +746,29 @@
   </main>
 
   <script>
-    // ── PROJECT DATA (extended descriptions for modal) ──
+    // ── PROJECT DATA ──
     const projectData = {
       colony: {
-        fullDesc: `Embedded imaging instrument on a Raspberry Pi 5, built for the Ryberg Lab at UConn to backlight agar plates and quantify bacterial colonies. An RP1 register-level PWM driver (direct mmap of the PWM and GPIO register banks) is written for the LED illumination, and the operator UI is a Flask single-page app shown full-screen in Chromium kiosk mode. The OpenCV pipeline runs from illumination correction through watershed segmentation to morphometric analysis. Anomaly detection has a statistical layer (z-score outliers on size and shape) and an ML layer (Random Forest and Isolation Forest) that stays inactive until enough colonies are labelled; none are labelled yet. Profiles for 39 organisms adjust anomaly flagging, and none has been validated on real plates yet. In a blind evaluation on 250 synthetic plates, with ground truth loaded only after detection returned, it reached a pooled F1 of 0.918 (clearing the 0.90 target, with 4 of 5 sets passing) at precision 0.995 — 41 false colonies across 250 plates — and a mean count error of 11.43% (8.89% on the passing sets). Two bugs were found and fixed: a watershed marker bug during the run, and, after the memo was published, a contour-extraction bug that had been discarding colony splits the segmentation stage made correctly. The second one raised F1 from 0.869 and cost the previously perfect precision; the memo carries a dated revision documenting both. They sit next to published error rates for OpenCFU and ColonyDoc-It on real agar, which is a literature comparison, not a head-to-head run. The one set still below target stresses heavily touching colonies. Pairwise geometry explains under half of what remains — multi-colony clusters are the larger cause — so closing it needs a different segmentation approach rather than parameter tuning. The evaluation and 59 unit tests run from the repo, and a separate continuous-testing harness records the git hash, environment, and input hashes for each run. Everything so far is synthetic by design, so biological validation on real clinical plates is the next phase.`
+        metrics: [
+          { value: '0.918', label: 'pooled F1' },
+          { value: '0.995', label: 'precision' },
+          { value: '11.43%', label: 'count error' },
+        ],
+        problem: 'The Ryberg Lab needed reproducible bacterial colony quantification without manual counting. The instrument had to score plates blind: ground truth is loaded only after detection returns, preventing result contamination.',
+        approach: 'Raspberry Pi 5 kiosk instrument with RP1 register-level PWM-driven backlighting (direct mmap of the PWM and GPIO register banks). OpenCV pipeline: illumination correction, Gaussian blur, adaptive threshold, watershed segmentation, morphometric filtering. Flask single-page app in Chromium kiosk mode. A separate evaluation harness records git hash, environment hash, and input hashes for every run.',
+        results: '250 synthetic held-out plates: pooled F1 0.918 (target 0.90, 4 of 5 sets passing), precision 0.995 (41 false colonies across 250 plates), mean count error 11.43% (8.89% on passing sets). Two bugs found and fixed mid-run and post-publication; each is documented with a dated revision in the memo.',
+        next: 'Biological validation on real agar plates is next. The one below-target set stresses heavily overlapping colonies; closing it requires a different segmentation approach, not parameter tuning.',
       },
       stm32: {
-        fullDesc: `Bare-metal C for the STM32F411RE Nucleo with zero HAL. It talks to hardware through direct memory-mapped register access using the device reference manual: 01-blinky enables the GPIOA clock and toggles PA5, and 02-uart enables USART2, routes PA2 to its alternate function, and transmits a string in a polling loop. The blinky builds to a 752-byte flash image at -O0. The repo is a numbered learning path with a public roadmap for the peripherals still to come: I2C (BME280 sensor), SPI (SSD1306 display), ADC with DMA circular-buffer sampling, and a FreeRTOS multitasking example.`
+        metrics: [
+          { value: '752 B', label: 'flash image' },
+          { value: '0', label: 'HAL calls' },
+          { value: 'F411RE', label: 'target' },
+        ],
+        problem: 'Learn embedded systems at the register level, without HAL abstraction, to understand what the hardware actually does rather than what the library hides.',
+        approach: '01-blinky: PA5 toggled via direct RCC clock enable and GPIOA MODER/ODR writes. Build chain: ARM GCC, custom linker script, st-flash for programming. Logic analyzer on the GPIO line to verify timing. USART2 transmit exercises are written but have a known baud-rate bug currently being debugged.',
+        results: 'GPIO blinky builds to a 752-byte flash image at -O0, logic-analyzer verified on hardware. Repo is a numbered learning path with the rationale for each register write in comments.',
+        next: 'USART2 baud-rate fix, then I2C (BME280 sensor), SPI (SSD1306 display), ADC with DMA circular buffer, FreeRTOS multitask example.',
       },
     };
 
@@ -751,19 +781,43 @@
       const id = card.dataset.project;
       const data = projectData[id];
 
-      // Icon
       document.getElementById('modalIcon').innerHTML = card.querySelector('.project-icon').outerHTML;
-      // Title
       document.getElementById('modalTitle').textContent = card.querySelector('.project-title').textContent;
-      // Description
-      document.getElementById('modalDesc').textContent = data ? data.fullDesc : card.querySelector('.project-desc').textContent;
-      // Tags
+
+      // metrics row
+      const metricsEl = document.getElementById('modalMetrics');
+      const dividerEl = document.getElementById('modalMetricsDivider');
+      if (data && data.metrics) {
+        metricsEl.innerHTML = data.metrics.map(m =>
+          `<div class="modal-metric"><div class="modal-metric-value">${m.value}</div><div class="modal-metric-label">${m.label}</div></div>`
+        ).join('');
+        metricsEl.style.display = '';
+        dividerEl.style.display = '';
+      } else {
+        metricsEl.style.display = 'none';
+        dividerEl.style.display = 'none';
+      }
+
+      // structured body or plain fallback
+      const bodyEl = document.getElementById('modalBody');
+      if (data && data.problem) {
+        bodyEl.innerHTML = [
+          ['Problem',       data.problem],
+          ['Approach',      data.approach],
+          ['Results',       data.results],
+          ['Status + Next', data.next],
+        ].map(([label, text]) =>
+          `<div><div class="modal-section-label">${label}</div><p class="modal-desc">${text}</p></div>`
+        ).join('');
+      } else {
+        const fallback = data ? (data.fullDesc || '') : card.querySelector('.project-desc').textContent;
+        bodyEl.innerHTML = `<div><div class="modal-section-label">Overview</div><p class="modal-desc">${fallback}</p></div>`;
+      }
+
       document.getElementById('modalTags').innerHTML = card.querySelector('.tech-tags').innerHTML;
-      // Actions (clone, re-enable stopPropagation)
+
       const actionsClone = card.querySelector('.project-actions').cloneNode(true);
-      actionsClone.querySelectorAll('a, button').forEach(el => {
-        el.removeAttribute('onclick');
-      });
+      actionsClone.querySelectorAll('a, button').forEach(el => el.removeAttribute('onclick'));
       document.getElementById('modalActions').innerHTML = actionsClone.innerHTML;
 
       overlay.classList.add('open');
