@@ -130,6 +130,18 @@
     }
     .hero-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .hero-ctas { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .hero-stack {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .hero-stack-layer {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.4px;
+      color: var(--text-tertiary);
+    }
+    .hero-stack-sep {
+      font-size: 10px; color: var(--border);
+      user-select: none;
+    }
     .hero-cta-ghost {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 14px 28px; background: transparent; color: var(--text-primary);
@@ -484,10 +496,19 @@
         <h1 class="hero-name">Mikey<br>Birmingham.</h1>
         <p class="hero-desc">
           Biomedical Engineering + Computer Science at UConn · CAPS Research Scholar, Ryberg Lab · Class of 2029.
-          I work at the hardware-software boundary: register-level bare-metal firmware on one end,
-          an embedded computer-vision instrument with a blind-validated evaluation on the other.
-          Targeting embedded and firmware engineering roles.
+          Nothing in a system operates in isolation: the firmware shapes what the optics can do,
+          the optics constrain what the algorithm recovers, and the evaluation closes the loop.
+          I work the full stack from registers to results.
         </p>
+        <div class="hero-stack" aria-label="Stack layers">
+          <span class="hero-stack-layer">Hardware</span>
+          <span class="hero-stack-sep">·</span>
+          <span class="hero-stack-layer">Firmware</span>
+          <span class="hero-stack-sep">·</span>
+          <span class="hero-stack-layer">Software</span>
+          <span class="hero-stack-sep">·</span>
+          <span class="hero-stack-layer">Verification</span>
+        </div>
         <div class="hero-ctas">
           <a href="#projects" class="hero-cta">
             View My Projects
@@ -506,7 +527,7 @@
       <div class="fade-up">
         <p class="section-eyebrow">Work</p>
         <h2 class="section-title">Projects.</h2>
-        <p class="section-sub">From register-level firmware to embedded computer vision and the data analysis behind it.</p>
+        <p class="section-sub">Each project is a vertical slice of the stack: hardware, firmware, software, and evaluation designed together, not bolted together.</p>
       </div>
 
       <div class="projects-grid fade-up" style="transition-delay:0.1s">
@@ -585,20 +606,33 @@
       <div class="fade-up">
         <p class="section-eyebrow">Expertise</p>
         <h2 class="section-title">Skills.</h2>
-        <p class="section-sub">Technical capabilities mapped to the projects that demonstrate them.</p>
+        <p class="section-sub">Organized by layer: nothing here operates in isolation.</p>
       </div>
 
       <div class="skills-layout fade-up" style="transition-delay:0.1s">
 
-        <!-- Embedded Systems & Firmware -->
+        <!-- Layer 0: Hardware -->
         <div class="skill-group">
-          <div class="skill-group-title">Embedded Systems &amp; Firmware</div>
+          <div class="skill-group-title">Hardware</div>
+          <div class="skill-row">
+            <span class="skill-name">Raspberry Pi 5 · kiosk instrument</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">STM32F411RE Nucleo</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+        </div>
+
+        <!-- Layer 1: Firmware -->
+        <div class="skill-group">
+          <div class="skill-group-title">Firmware</div>
           <div class="skill-row">
             <span class="skill-name">C</span>
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">STM32 / ARM Cortex-M4</span>
+            <span class="skill-name">ARM Cortex-M4 / ARM GCC toolchain</span>
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
@@ -606,31 +640,18 @@
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">ARM GCC Toolchain</span>
-            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Hardware PWM via register access (RP1)</span>
+            <span class="skill-name">Register-level RP1 PWM: direct mmap</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">UART RX, I2C, SPI, ADC/DMA, FreeRTOS</span>
+            <span class="skill-name">I2C, SPI, ADC/DMA, FreeRTOS</span>
             <div class="proj-tags"><span class="proj-tag tag-soon">Roadmap</span></div>
           </div>
         </div>
 
-        <!-- Hardware & Interfacing -->
+        <!-- Layer 2: Application Software -->
         <div class="skill-group">
-          <div class="skill-group-title">Hardware &amp; Interfacing</div>
-          <div class="skill-row">
-            <span class="skill-name">Raspberry Pi 5 kiosk deployment</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
-          </div>
-        </div>
-
-        <!-- Data & Analytics -->
-        <div class="skill-group">
-          <div class="skill-group-title">Data &amp; Analytics</div>
+          <div class="skill-group-title">Application Software</div>
           <div class="skill-row">
             <span class="skill-name">Python</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
@@ -648,9 +669,18 @@
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Matplotlib: figures</span>
+            <span class="skill-name">Flask: REST API &amp; operator UI</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
+          <div class="skill-row">
+            <span class="skill-name">Linux: Raspberry Pi OS</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+        </div>
+
+        <!-- Layer 3: Verification -->
+        <div class="skill-group">
+          <div class="skill-group-title">Verification</div>
           <div class="skill-row">
             <span class="skill-name">Blind evaluation harness: pooled F1, reproducible runs</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
@@ -659,21 +689,12 @@
             <span class="skill-name">pytest &amp; GitHub Actions CI</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
-        </div>
-
-        <!-- Software & Systems -->
-        <div class="skill-group">
-          <div class="skill-group-title">Software &amp; Systems</div>
           <div class="skill-row">
-            <span class="skill-name">Flask: REST API &amp; operator UI</span>
+            <span class="skill-name">Matplotlib: result figures</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Linux: Raspberry Pi OS</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Git: branches, commits, documentation</span>
+            <span class="skill-name">Git: version control, documented branches</span>
             <div class="proj-tags"><span class="proj-tag tag-all">All Projects</span></div>
           </div>
         </div>

@@ -5,6 +5,32 @@ Format: **Phase · What · Why**.
 
 ---
 
+## 2026-11-07 (continued)
+
+### Phase 5 · Systems narrative + skills by stack layer (`feat(systems)`)
+
+**What changed**
+- Hero description rewritten to surface the systems-thinking frame: firmware shapes
+  what optics can do, optics constrain what the algorithm recovers, evaluation closes
+  the loop.
+- Added a muted stack-layer row in the hero (Hardware · Firmware · Software · Verification)
+  as a visual shorthand for the full-stack framing.
+- Projects subtitle updated to "vertical slice" framing: hardware, firmware, software,
+  and evaluation designed together.
+- Skills section subtitle updated to "Organized by layer: nothing here operates in
+  isolation."
+- Skills groups renamed from domain buckets to stack layers: Hardware / Firmware /
+  Application Software / Verification. Skills redistributed to match (RP1 PWM moved
+  to Firmware, Flask + Linux moved to Application Software, blind eval harness + pytest
+  moved to Verification, Matplotlib moved to Verification).
+
+**Why**
+Domain-bucket labels (Embedded Systems, Data & Analytics) look like a keyword-stuffed
+resume. Stack layers communicate how the system works and show that every piece was
+designed with the others in mind, which is the actual message.
+
+---
+
 ## 2026-11-07
 
 ### Phase 4 · Accessibility pass (`fix(a11y)`)
