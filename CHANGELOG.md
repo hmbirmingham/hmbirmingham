@@ -5,6 +5,32 @@ Format: **Phase · What · Why**.
 
 ---
 
+## 2026-11-16
+
+### Phase 6 · Four projects, résumé-matched wording, November résumé
+
+**What changed**
+- Projects now shows four cards: Hardware Matrix Accelerator, STM32 Bare-Metal Drivers,
+  the colony counting instrument from the Ryberg Lab, and Scope Studio. Each card's
+  one-line description is the same sentence as my résumé, and each links to the repo.
+- Every project detail view was rebuilt from claims I traced to a file on that repo's
+  `main`. Each one also says what is not measured or not built yet.
+- The STM32 card had said the driver was logic-analyzer verified and that the UART had
+  a known baud-rate bug. Neither is true on `main`: the bug is fixed, and there is no
+  logic analyzer capture. Both statements are gone.
+- The colony detail view says I presented this work at the UMBC Undergraduate Research
+  Conference in September 2026.
+- Skills now use the same four groups as my résumé: Embedded, Hardware Design,
+  Perception and ML, and Software.
+- Replaced the October résumé PDF with the November one and pointed every link at it.
+- Removed the last HuskyBook leftover, an unused tag style.
+
+**Why**
+For NSBE Region I FRC. The site and the résumé now make the same claims in the same
+words, and every claim traces to a file on `main` in the repo it describes.
+
+---
+
 ## 2026-11-07 (continued)
 
 ### Phase 5 · Systems narrative + skills by stack layer (`feat(systems)`)
