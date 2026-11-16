@@ -334,7 +334,8 @@
     .tag-focus   { background: rgba(10,132,255,0.12); color: #0a84ff; }
     .tag-all     { background: rgba(0,113,227,0.10);  color: var(--accent); }
     .tag-soon    { background: rgba(0,0,0,0.05); color: var(--text-tertiary); }
-    .tag-husky   { background: rgba(94,92,230,0.14); color: #5e5ce6; }
+    .tag-matrix  { background: rgba(90,200,250,0.14); color: #0a84ff; }
+    .tag-scope   { background: rgba(255,159,10,0.14); color: #ff9f0a; }
     .tag-wip     { background: rgba(255,159,10,0.14); color: #ff9f0a; }
     @media (prefers-color-scheme: dark) {
       .tag-soon { background: rgba(255,255,255,0.07); }
@@ -514,7 +515,7 @@
             View My Projects
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
-          <a href="assets/resume/HynesB_Resume(10.26).pdf" download class="hero-cta-ghost">
+          <a href="assets/resume/HynesB_Resume(11.26).pdf" download class="hero-cta-ghost">
             Download Résumé
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </a>
@@ -532,7 +533,63 @@
 
       <div class="projects-grid fade-up" style="transition-delay:0.1s">
 
-        <!-- PROJECT 1: Colony Counter -->
+        <!-- PROJECT 1: Hardware Matrix Accelerator -->
+        <div class="project-card" data-project="matrix">
+          <span class="expand-hint">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Expand
+          </span>
+          <div class="project-icon" style="background: linear-gradient(135deg, #0071e3, #5ac8fa)">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <div class="project-title">Hardware Matrix Accelerator</div>
+          <div class="project-desc">
+            Designed a 4x4 grid of multiply units in hardware, aimed at offloading the matrix math behind 3D point cloud transforms from a microcontroller; verified in cycle-accurate simulation.
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">SystemVerilog</span>
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">cocotb</span>
+            <span class="tech-tag">Yosys</span>
+            <span class="tech-tag">GitHub Actions</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/hmbirmingham/systolic-array" target="_blank" rel="noopener" class="btn btn-github" onclick="event.stopPropagation()">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- PROJECT 2: STM32 -->
+        <div class="project-card" data-project="stm32">
+          <span class="expand-hint">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Expand
+          </span>
+          <div class="project-icon" style="background: linear-gradient(135deg, #bf5af2, #ff375f)">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><rect x="2" y="9" width="6" height="6" rx="1"/><rect x="16" y="9" width="6" height="6" rx="1"/><line x1="9" y1="5" x2="8" y2="5"/><line x1="15" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="16"/></svg>
+          </div>
+          <div class="project-title">STM32 Bare-Metal Drivers</div>
+          <div class="project-desc">
+            Wrote LED (GPIO) and serial communication (UART) drivers for an STM32 microcontroller from the chip manual, with no vendor libraries, and tested each one on hardware on its own.
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">C</span>
+            <span class="tech-tag">ARM Cortex-M4</span>
+            <span class="tech-tag">STM32</span>
+            <span class="tech-tag">ARM GCC</span>
+            <span class="tech-tag">st-flash</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/hmbirmingham/stm32-peripherals" target="_blank" rel="noopener" class="btn btn-github" onclick="event.stopPropagation()">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- PROJECT 3: Colony counting instrument -->
         <div class="project-card" data-project="colony">
           <span class="expand-hint">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
@@ -541,16 +598,16 @@
           <div class="project-icon" style="background: linear-gradient(135deg, #30d158, #0071e3)">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="3"/></svg>
           </div>
-          <div class="project-title">Automated Bacterial Colony Counter</div>
+          <div class="project-title">Colony Counting Instrument, Ryberg Lab</div>
           <div class="project-desc">
-            Embedded imaging instrument on a Raspberry Pi 5, built for the Ryberg Lab at UConn, that backlights agar plates and quantifies bacterial colonies. On 250 synthetic plates scored blind (ground truth loaded only after detection returned), the Python/OpenCV pipeline (illumination correction, watershed segmentation, morphometrics) reached a pooled F1 of 0.918 against a 0.90 target, at precision 0.995 (41 false colonies across 250 plates) and an 11.43% mean count error. Two bugs found during and after the run were fixed and the set re-run; the memo documents both changes. Biological validation on real agar is next.
+            Lead developer of a camera-based instrument that automatically detects and counts bacterial colonies, covering the custom power board, Raspberry Pi 5 software, and the computer vision pipeline.
           </div>
           <div class="tech-tags">
             <span class="tech-tag">Python</span>
             <span class="tech-tag">OpenCV</span>
             <span class="tech-tag">Raspberry Pi 5</span>
             <span class="tech-tag">Flask</span>
-            <span class="tech-tag">scikit-learn</span>
+            <span class="tech-tag">KiCad</span>
             <span class="tech-tag">Linux</span>
           </div>
           <div class="project-actions">
@@ -565,36 +622,30 @@
           </div>
         </div>
 
-        <!-- PROJECT 2: STM32 -->
-        <div class="project-card" data-project="stm32">
+        <!-- PROJECT 4: Scope Studio -->
+        <div class="project-card" data-project="scope">
           <span class="expand-hint">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
             Expand
           </span>
-          <div class="project-icon" style="background: linear-gradient(135deg, #bf5af2, #ff375f)">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><rect x="2" y="9" width="6" height="6" rx="1"/><rect x="16" y="9" width="6" height="6" rx="1"/><line x1="9" y1="5" x2="8" y2="5"/><line x1="15" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="16"/></svg>
+          <div class="project-icon" style="background: linear-gradient(135deg, #ff9f0a, #ff375f)">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><line x1="8" y1="7.5" x2="10.5" y2="16"/><line x1="16" y1="7.5" x2="13.5" y2="16"/><line x1="8.5" y1="6" x2="15.5" y2="6"/></svg>
           </div>
-          <div class="project-title">STM32 Bare-Metal Register-Level C</div>
+          <div class="project-title">Scope Studio</div>
           <div class="project-desc">
-            Register-level C for the STM32F411RE Nucleo with no HAL. 01-blinky toggles PA5 through direct RCC clock enable and GPIOA register writes, logic-analyzer verified, 752-byte flash image at -O0. USART2 transmit exercises are written but have a known baud-rate bug being debugged. Roadmap: I2C, SPI, ADC with DMA, FreeRTOS.
+            Built the backend for an engineering knowledge search tool: it stores files and design decisions as a linked graph, pulls in GitHub repositories, and returns only the most relevant context for a question within a fixed size limit.
           </div>
           <div class="tech-tags">
-            <span class="tech-tag">C</span>
-            <span class="tech-tag">STM32</span>
-            <span class="tech-tag">ARM Cortex-M4</span>
-            <span class="tech-tag">ARM GCC</span>
-            <span class="tech-tag">STM32CubeIDE</span>
-            <span class="tech-tag">st-flash</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">Express</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">pgvector</span>
           </div>
           <div class="project-actions">
-            <a href="https://github.com/hmbirmingham/stm32-peripherals" target="_blank" rel="noopener" class="btn btn-github" onclick="event.stopPropagation()">
+            <a href="https://github.com/hmbirmingham/scope-studio" target="_blank" rel="noopener" class="btn btn-github" onclick="event.stopPropagation()">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
               GitHub
             </a>
-            <span class="btn btn-demo-disabled">
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Demo Coming Soon
-            </span>
           </div>
         </div>
 
@@ -606,96 +657,120 @@
       <div class="fade-up">
         <p class="section-eyebrow">Expertise</p>
         <h2 class="section-title">Skills.</h2>
-        <p class="section-sub">Organized by layer: nothing here operates in isolation.</p>
+        <p class="section-sub">Grouped the same way as my résumé, each tagged with the project that uses it.</p>
       </div>
 
       <div class="skills-layout fade-up" style="transition-delay:0.1s">
 
-        <!-- Layer 0: Hardware -->
         <div class="skill-group">
-          <div class="skill-group-title">Hardware</div>
-          <div class="skill-row">
-            <span class="skill-name">Raspberry Pi 5 · kiosk instrument</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">STM32F411RE Nucleo</span>
-            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
-          </div>
-        </div>
-
-        <!-- Layer 1: Firmware -->
-        <div class="skill-group">
-          <div class="skill-group-title">Firmware</div>
+          <div class="skill-group-title">Embedded</div>
           <div class="skill-row">
             <span class="skill-name">C</span>
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">ARM Cortex-M4 / ARM GCC toolchain</span>
+            <span class="skill-name">ARM Cortex-M4 (STM32)</span>
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Register-level MMIO: GPIO, USART2</span>
+            <span class="skill-name">Bare-metal drivers</span>
             <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Register-level RP1 PWM: direct mmap</span>
+            <span class="skill-name">Interrupts</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">UART serial</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Debugging over SWD</span>
+            <div class="proj-tags"><span class="proj-tag tag-stm32">STM32</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">KiCad PCB design</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">I2C, SPI, ADC/DMA, FreeRTOS</span>
-            <div class="proj-tags"><span class="proj-tag tag-soon">Roadmap</span></div>
+            <span class="skill-name">Raspberry Pi / embedded Linux</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
         </div>
 
-        <!-- Layer 2: Application Software -->
         <div class="skill-group">
-          <div class="skill-group-title">Application Software</div>
+          <div class="skill-group-title">Hardware Design</div>
+          <div class="skill-row">
+            <span class="skill-name">SystemVerilog</span>
+            <div class="proj-tags"><span class="proj-tag tag-matrix">Matrix</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Simulation-based verification</span>
+            <div class="proj-tags"><span class="proj-tag tag-matrix">Matrix</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Fixed-point math</span>
+            <div class="proj-tags"><span class="proj-tag tag-matrix">Matrix</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">FPGA synthesis tools</span>
+            <div class="proj-tags"><span class="proj-tag tag-matrix">Matrix</span></div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Perception and ML</div>
           <div class="skill-row">
             <span class="skill-name">Python</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span><span class="proj-tag tag-matrix">Matrix</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">OpenCV</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">OpenCV: computer vision pipeline</span>
+            <span class="skill-name">Computer vision</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">NumPy, pandas, SciPy: data processing</span>
+            <span class="skill-name">scikit-learn</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">scikit-learn: Random Forest &amp; Isolation Forest</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+            <span class="skill-name">NumPy</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span><span class="proj-tag tag-matrix">Matrix</span></div>
           </div>
           <div class="skill-row">
-            <span class="skill-name">Flask: REST API &amp; operator UI</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Linux: Raspberry Pi OS</span>
+            <span class="skill-name">pandas</span>
             <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
         </div>
 
-        <!-- Layer 3: Verification -->
         <div class="skill-group">
-          <div class="skill-group-title">Verification</div>
+          <div class="skill-group-title">Software</div>
           <div class="skill-row">
-            <span class="skill-name">Blind evaluation harness: pooled F1, reproducible runs</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">pytest &amp; GitHub Actions CI</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Matplotlib: result figures</span>
-            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-name">Git: version control, documented branches</span>
+            <span class="skill-name">Git</span>
             <div class="proj-tags"><span class="proj-tag tag-all">All Projects</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Automated testing and CI</span>
+            <div class="proj-tags"><span class="proj-tag tag-matrix">Matrix</span><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Node.js</span>
+            <div class="proj-tags"><span class="proj-tag tag-scope">Scope Studio</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">PostgreSQL</span>
+            <div class="proj-tags"><span class="proj-tag tag-scope">Scope Studio</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Flask</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Linux</span>
+            <div class="proj-tags"><span class="proj-tag tag-colony">Colony Counter</span></div>
           </div>
         </div>
 
@@ -707,18 +782,18 @@
       <div class="fade-up">
         <p class="section-eyebrow">Résumé</p>
         <h2 class="section-title">On Paper.</h2>
-        <p class="section-sub">Updated October 2026.</p>
+        <p class="section-sub">Updated November 2026.</p>
       </div>
       <div class="fade-up" style="transition-delay:0.1s">
         <div class="resume-viewer">
-          <iframe id="resumeFrame" src="assets/resume/HynesB_Resume(10.26).pdf" title="Mikey Birmingham résumé" loading="lazy"></iframe>
+          <iframe id="resumeFrame" src="assets/resume/HynesB_Resume(11.26).pdf" title="Mikey Birmingham résumé" loading="lazy"></iframe>
         </div>
         <div class="resume-bar">
-          <a href="assets/resume/HynesB_Resume(10.26).pdf" download class="btn btn-demo">
+          <a href="assets/resume/HynesB_Resume(11.26).pdf" download class="btn btn-demo">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download PDF
           </a>
-          <a href="assets/resume/HynesB_Resume(10.26).pdf" target="_blank" rel="noopener" class="btn btn-github">
+          <a href="assets/resume/HynesB_Resume(11.26).pdf" target="_blank" rel="noopener" class="btn btn-github">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Open in new tab
           </a>
@@ -769,27 +844,51 @@
   <script>
     // ── PROJECT DATA ──
     const projectData = {
-      colony: {
+      matrix: {
         metrics: [
-          { value: '0.918', label: 'pooled F1' },
-          { value: '0.995', label: 'precision' },
-          { value: '11.43%', label: 'count error' },
+          { value: '2.5', label: 'clock cycles per point' },
+          { value: '1.5 mm', label: 'RMS position error' },
+          { value: 'Exact', label: 'match to reference' },
         ],
-        problem: 'The Ryberg Lab needed reproducible bacterial colony quantification without manual counting. The instrument had to score plates blind: ground truth is loaded only after detection returns, preventing result contamination.',
-        approach: 'Raspberry Pi 5 kiosk instrument with RP1 register-level PWM-driven backlighting (direct mmap of the PWM and GPIO register banks). OpenCV pipeline: illumination correction, Gaussian blur, adaptive threshold, watershed segmentation, morphometric filtering. Flask single-page app in Chromium kiosk mode. A separate evaluation harness records git hash, environment hash, and input hashes for every run.',
-        results: '250 synthetic held-out plates: pooled F1 0.918 (target 0.90, 4 of 5 sets passing), precision 0.995 (41 false colonies across 250 plates), mean count error 11.43% (8.89% on passing sets). Two bugs found and fixed mid-run and post-publication; each is documented with a dated revision in the memo.',
-        next: 'Biological validation on real agar plates is next. The one below-target set stresses heavily overlapping colonies; closing it requires a different segmentation approach, not parameter tuning.',
+        sections: [
+          ['What I built', 'Designed a 4x4 grid of multiply units in hardware, aimed at offloading the matrix math behind 3D point cloud transforms from a microcontroller; verified in cycle-accurate simulation.'],
+          ['Results', 'Transforms each 3D point in 2.5 clock cycles with 1.5 mm RMS position error, and matched a reference model exactly on every output.'],
+          ['How I verified it', 'Proved the tests could catch failures by deliberately breaking the design, and set up automated testing that runs on every proposed change.'],
+          ['Not measured yet', 'Simulation only. Maximum clock speed, the image filter benchmark and the comparison against a Cortex-M4 are not measured yet.'],
+        ],
       },
       stm32: {
         metrics: [
-          { value: '752 B', label: 'flash image' },
-          { value: '0', label: 'HAL calls' },
-          { value: 'F411RE', label: 'target' },
+          { value: '115,108', label: 'baud (target 115,200)' },
+          { value: '0.08%', label: 'baud error' },
+          { value: '35', label: 'lines, no corruption' },
         ],
-        problem: 'Learn embedded systems at the register level, without HAL abstraction, to understand what the hardware actually does rather than what the library hides.',
-        approach: '01-blinky: PA5 toggled via direct RCC clock enable and GPIOA MODER/ODR writes. Build chain: ARM GCC, custom linker script, st-flash for programming. Logic analyzer on the GPIO line to verify timing. USART2 transmit exercises are written but have a known baud-rate bug currently being debugged.',
-        results: 'GPIO blinky builds to a 752-byte flash image at -O0, logic-analyzer verified on hardware. Repo is a numbered learning path with the rationale for each register write in comments.',
-        next: 'USART2 baud-rate fix, then I2C (BME280 sensor), SPI (SSD1306 display), ADC with DMA circular buffer, FreeRTOS multitask example.',
+        sections: [
+          ['What I built', 'Wrote LED (GPIO) and serial communication (UART) drivers for an STM32 microcontroller from the chip manual, with no vendor libraries, and tested each one on hardware on its own.'],
+          ['Results', 'Hit 115,108 baud against a 115,200 target (0.08% error); 35 lines transmitted with no corruption or dropped characters, and bad data sent at the wrong speed was rejected, never stored.'],
+          ['What I fixed', 'Traced a garbled-output bug to a wrong clock assumption and added a regression test so it cannot come back.'],
+          ['Not measured yet', 'There is no logic analyzer capture of the serial pin yet, so the bit timing is calculated from the baud rate, not measured.'],
+        ],
+      },
+      colony: {
+        metrics: [
+          { value: '0.918', label: 'F1 (target 0.90)' },
+          { value: '99.5%', label: 'detections correct' },
+          { value: '250', label: 'synthetic plates' },
+        ],
+        sections: [
+          ['What I built', 'Lead developer of a camera-based instrument that automatically detects and counts bacterial colonies, covering the custom power board, Raspberry Pi 5 software, and the computer vision pipeline.'],
+          ['How I tested it', 'Tested the vision pipeline blind on 250 synthetic plates it had never seen: 0.918 F1 against a 0.90 target, with 99.5% of detections correct.'],
+          ['What I fixed', 'Found and fixed a bug that was merging separate colonies (F1 0.869 to 0.918), and published a revised validation report showing both results.'],
+          ['Presented', 'Presented original research at the UMBC Undergraduate Research Conference, Sep 2026.'],
+          ['Not done yet', 'Every result so far is on synthetic plates; real agar plates come next. The machine learning anomaly classifier is not trained yet, and the power board needs a second revision before bring-up.'],
+        ],
+      },
+      scope: {
+        sections: [
+          ['What I built', 'Built the backend for an engineering knowledge search tool: it stores files and design decisions as a linked graph, pulls in GitHub repositories, and returns only the most relevant context for a question within a fixed size limit.'],
+          ['Not built yet', 'There is no working frontend, no model routing and no benchmark results yet.'],
+        ],
       },
     };
 
@@ -821,13 +920,8 @@
 
       // structured body or plain fallback
       const bodyEl = document.getElementById('modalBody');
-      if (data && data.problem) {
-        bodyEl.innerHTML = [
-          ['Problem',       data.problem],
-          ['Approach',      data.approach],
-          ['Results',       data.results],
-          ['Status + Next', data.next],
-        ].map(([label, text]) =>
+      if (data && data.sections) {
+        bodyEl.innerHTML = data.sections.map(([label, text]) =>
           `<div><div class="modal-section-label">${label}</div><p class="modal-desc">${text}</p></div>`
         ).join('');
       } else {
